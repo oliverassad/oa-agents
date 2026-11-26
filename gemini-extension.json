@@ -1,6 +1,6 @@
 {
-  "name": "team",
-  "version": "1.10.0",
+  "name": "oa-agents",
+  "version": "2.0.0",
   "description": "Shared rules, agents and skills for every project.",
   "contextFileName": "AGENTS.md"
 }

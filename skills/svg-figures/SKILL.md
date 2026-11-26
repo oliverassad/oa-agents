@@ -51,7 +51,7 @@ python3 -I <skill-dir>/verify_svg.py <figure.svg>
 
 20. Default `viewBox="0 0 1600 900"` (16:9).
 21. Other shapes, all 900 high: pipeline 2100 x 900, single focus 1200 x 900, icon 900 x 900.
-22. Crop to the content plus 16 units at most. `preserveAspectRatio="xMidYMid meet"`.
+22. Crop to the content plus 16 units at most. When the host fixes the viewBox (finops.how: 1600 x 900), do not crop: scale and re-space the content to fill it, with 16 units of outer padding. `preserveAspectRatio="xMidYMid meet"`.
 23. No `width` or `height` attributes.
 
 ## 6. Space
@@ -69,6 +69,7 @@ python3 -I <skill-dir>/verify_svg.py <figure.svg>
 31. `text-anchor="middle"` for labels, `start` for lists. One line a label.
 32. 16 units free around every text item. Where text must cross a line, add a halo: `paint-order="stroke" stroke="var(--background)" stroke-width="8"`.
 33. One focal point, one animated flow at most.
+33a. A figure or panel title states its point as a short plain phrase in sentence case. No all-caps tags.
 
 ## 8. Minimal graphics
 
@@ -84,6 +85,6 @@ python3 -I <skill-dir>/verify_svg.py <figure.svg>
 
 ## 10. House styles
 
-- **Annotation (two lines):** line 1 starts `// `, ALL CAPS, bold, mono, 24 units at least. Line 2 is the plain note, mono, weight 400. Foreground colour, never accent. Left-aligned. Baseline gap 26 to 28 units. 80 characters a line at most.
+- **Annotation (two lines):** line 1 is a short plain phrase in sentence case that states the point, bold, mono, 24 units at least. Line 2 is the plain note, mono, weight 400. Foreground colour, never accent. Left-aligned. Baseline gap 26 to 28 units. 80 characters a line at most.
 - **Quote:** a thin vertical bar on the left (stroke 3, round cap), 24 to 32 units from the text. Lines left-aligned, about 20 percent larger than body text. Highlight arrows in accent at opacity 0.45, stroke 2.
 - **No boxes by default:** free text and simple shapes over card borders.

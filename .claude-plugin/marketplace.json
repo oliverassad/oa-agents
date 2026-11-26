@@ -2,5 +2,5 @@
   "name": "oa-agents",
   "owner": { "name": "Oliver Assad" },
   "metadata": { "description": "Shared rules, agents and skills for every project." },
-  "plugins": [{ "name": "team", "source": "./", "description": "Shared rules, agents and skills for every project." }]
+  "plugins": [{ "name": "oa-agents", "source": "./", "description": "Shared rules, agents and skills for every project." }]
 }
