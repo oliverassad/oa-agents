@@ -4,10 +4,10 @@ This repository holds the shared agents, skills and rules for every project of t
 
 ## Layout
 
-- `.agents/agents/<role>/agent.md`: one role, tool-neutral. Frontmatter: `name`, `description`, `tier`, `access` (`write`, `read-only`, `no-write`), `rules` (rule files the role gets).
+- `.agents/agents/<role>/agent.md`: one role, tool-neutral. Frontmatter: `name`, `description`, `access` (`write`, `read-only`, `no-write`), `rules` (rule files the role gets).
 - `.agents/skills/<name>/SKILL.md`: skills in the Agent Skills format.
 - `.agents/rules/`: `core/` (every session and agent), `lang/` (per language), `area/` (per area: api, mcp, db, ui, testing, deps, infra, content).
-- `.agents/models.json`: tier to model, per tool.
+- `.agents/models.json`: the model map. `roles` (role to tier) and `tiers` (tier to model per tool). Every agent needs a role entry; the build fails otherwise.
 - `claude/`: Claude-only sources (plugin manifest, hooks).
 - `plugins/team/`, `dist/gemini/`: generated. Never edit them by hand.
 

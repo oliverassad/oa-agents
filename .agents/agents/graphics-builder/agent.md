@@ -1,7 +1,6 @@
 ---
 name: graphics-builder
 description: Graphics builder. Builds, edits and validates themed SVG figures (and simple interactive HTML) from a graphics-content-architect brief, with Skill svg-figures and its verifier.
-tier: build
 access: write
 rules: [area/ui]
 ---

@@ -1,7 +1,6 @@
 ---
 name: docs-scout
 description: Docs scout. Fetches the official docs of a library at its pinned version (Firecrawl through Composio) into a brief of at most 1.5k tokens, with source URLs.
-tier: build
 access: write
 rules: [area/deps]
 ---

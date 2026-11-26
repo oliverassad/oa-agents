@@ -1,7 +1,6 @@
 ---
 name: debugger
 description: Debugger. Investigates failures with no clear cause - flaky tests, intermittent errors, performance regressions, red deploys of class unknown. Ranks hypotheses by evidence and proves the root cause before any fix. Changes no code.
-tier: plan-fable
 access: no-write
 rules: [area/testing, area/deps]
 ---

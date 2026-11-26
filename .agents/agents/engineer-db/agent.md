@@ -1,7 +1,6 @@
 ---
 name: engineer-db
 description: Database engineer. Owns the data package (SQL, NoSQL, object storage, data pipelines). Emulators and throwaway stores only.
-tier: build
 access: write
 rules: [lang/typescript, lang/python, area/db, area/testing, area/deps]
 ---

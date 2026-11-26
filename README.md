@@ -9,7 +9,7 @@ Shared agents, skills and rules for every project, from one source:
 ## What you get
 
 - 18 role agents (`team:architect`, `team:engineer-ui`, `team:tester`, ...). See the roster in `.agents/skills/agent-orchestrator/SKILL.md`.
-- Skills: `agent-orchestrator` (the standard workflow), `deploy-triage` (red deploys), `health-check` (weekly, schedulable), `my-voice`, `svg-figures`, `new-project`.
+- Skills: `agent-orchestrator` (the standard workflow), `deploy-triage` (red deploys), `health-check` (weekly, schedulable), `bootstrap-project` (new project as milestone M0), `my-voice`, `svg-figures`, `new-project`.
 - Rules by category: `core/` for everyone, `lang/` (TypeScript, Svelte, Python), `area/` (API, MCP, database, UI, testing, dependencies, infrastructure, content).
 - Hooks: core rules at session start; role and language rules at each subagent start; rtk rewrite and an absolute-path guard.
 
@@ -35,6 +35,20 @@ On one machine, for every project: add this to `~/.claude/settings.json`.
 For cloud sessions too: run Skill `new-project` in the repository. It writes `.claude/settings.json` with the `team`, `caveman` and `ponytail` plugins and the ultra modes, plus `AGENTS.md`, `CLAUDE.md` and `.agents/roles/`.
 
 The repository is private. Claude Code uses your git credentials (`gh auth login`). Background auto-update needs `GITHUB_TOKEN`. A cloud session needs the Claude GitHub App to have access to this repository.
+
+## Models
+
+`.agents/models.json` is the one place that says which model runs which role: `roles` maps a role to a tier, `tiers` maps a tier to a model per tool. Agents name no model.
+
+| Tier | Claude | Roles |
+| --- | --- | --- |
+| main | opus, effort high | main session: orchestrator, code-review |
+| plan-deep | fable, effort medium | architect, debugger |
+| plan | opus | graphics-content-architect, ticket-writer |
+| build | sonnet | engineers, tester, scribe, docs-scout, design-import, design-auditor, content-writer, graphics-builder |
+| cheap | haiku | integrator |
+
+A project overrides roles or tiers in its own `.agents/models.json`; the orchestrator passes the model on each dispatch. `CLAUDE_CODE_SUBAGENT_MODEL` in a project's settings forces one model on every subagent.
 
 ## Project facts
 

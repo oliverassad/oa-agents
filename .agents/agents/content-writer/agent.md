@@ -1,7 +1,6 @@
 ---
 name: content-writer
 description: Content writer. Researches with Firecrawl through Composio and writes one content file (<topic>.md) in the house pattern - Why/What/How, one idea per section, figure hints - in ASD-STE100.
-tier: build
 access: write
 rules: [area/content]
 ---

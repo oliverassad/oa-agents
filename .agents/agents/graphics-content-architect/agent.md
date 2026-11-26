@@ -1,7 +1,6 @@
 ---
 name: graphics-content-architect
 description: Figure architect. Turns an idea for a figure into a short requirements brief the graphics-builder builds from. Refines fast, or runs a short options dialog when asked for inspiration. Writes no code and no files.
-tier: plan
 access: no-write
 rules: [area/content, area/ui]
 ---

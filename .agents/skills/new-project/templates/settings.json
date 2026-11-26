@@ -1,4 +1,5 @@
 {
+  "model": "opus",
   "env": {
     "CAVEMAN_DEFAULT_MODE": "ultra",
     "PONYTAIL_DEFAULT_MODE": "ultra"

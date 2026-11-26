@@ -1,7 +1,6 @@
 ---
 name: engineer-ui
 description: UI engineer. Owns the component library and the app routes. Tokens only, print 1:1, stories and fidelity probes.
-tier: build
 access: write
 rules: [lang/typescript, lang/svelte, area/ui, area/testing, area/deps]
 ---

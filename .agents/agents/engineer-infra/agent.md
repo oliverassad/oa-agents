@@ -1,7 +1,6 @@
 ---
 name: engineer-infra
 description: Infrastructure engineer. Owns infra as code (Terraform), CI workflows and cloud configuration. Plans and validates; never applies.
-tier: build
 access: write
 rules: [lang/python, area/infra, area/deps]
 ---

@@ -41,6 +41,18 @@ class Hooks(unittest.TestCase):
         self.assertIsNone(guard.ABSOLUTE.search("git status"))
 
 
+class Models(unittest.TestCase):
+    def test_role_map_must_match_agents_and_tiers(self):
+        sys.path.insert(0, str(ROOT / "scripts"))
+        from build import check_models
+        models = {"tiers": {"build": {}}, "roles": {"tester": "build"}}
+        check_models(models, {"tester"})
+        with self.assertRaises(ValueError):
+            check_models(models, {"tester", "debugger"})
+        with self.assertRaises(ValueError):
+            check_models({"tiers": {}, "roles": {"tester": "build"}}, {"tester"})
+
+
 class VersionGuard(unittest.TestCase):
     def test_output_change_needs_a_new_version(self):
         sys.path.insert(0, str(ROOT / "scripts"))

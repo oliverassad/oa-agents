@@ -32,8 +32,8 @@ def parse(path: Path) -> tuple[dict, str]:
     return meta, match.group(2)
 
 
-def claude_agent(meta: dict, body: str, tiers: dict) -> str:
-    tier = tiers[meta["tier"]]
+def claude_agent(meta: dict, body: str, models: dict) -> str:
+    tier = models["tiers"][models["roles"][meta["name"]]]
     lines = [f"name: {meta['name']}", f"description: {meta['description']}", f"model: {tier['claude']}"]
     lines += [f"effort: {tier['effort']}"] if "effort" in tier else []
     lines += [f"disallowedTools: {NO_WRITE}"] if meta["access"] in ("read-only", "no-write") else []
@@ -42,16 +42,17 @@ def claude_agent(meta: dict, body: str, tiers: dict) -> str:
     return "---\n" + "\n".join(lines) + "\n---\n\n" + first + body.lstrip()
 
 
-def build_claude(out: Path, agents: list, tiers: dict) -> None:
+def build_claude(out: Path, agents: list, models: dict) -> None:
     plugin = out / "plugins" / "team"
     (plugin / "agents").mkdir(parents=True)
     for meta, body in agents:
-        (plugin / "agents" / f"{meta['name']}.md").write_text(claude_agent(meta, body, tiers), encoding="utf-8")
+        (plugin / "agents" / f"{meta['name']}.md").write_text(claude_agent(meta, body, models), encoding="utf-8")
     shutil.copytree(SRC / "skills", plugin / "skills")
     shutil.copytree(SRC / "rules", plugin / "rules")
     roles = {meta["name"]: meta["rules"] for meta, _ in agents}
     (plugin / "rules" / "roles.json").write_text(json.dumps(roles, indent=2) + "\n", encoding="utf-8")
     shutil.copytree(ROOT / "claude" / "hooks", plugin / "hooks")
+    shutil.copy(SRC / "models.json", plugin / "models.json")
     shutil.copytree(ROOT / "claude" / "manifest", plugin / ".claude-plugin")
 
 
@@ -64,17 +65,27 @@ def build_gemini(out: Path, version: str) -> None:
     (ext / "GEMINI.md").write_text("\n\n".join(rules), encoding="utf-8")
     shutil.copytree(SRC / "skills", ext / "skills")
     shutil.copytree(SRC / "rules", ext / "rules")
+    shutil.copy(SRC / "models.json", ext / "models.json")
+
+
+def check_models(models: dict, names: set) -> None:
+    """Every agent has exactly one role entry, and every role names a known tier."""
+    roles = models["roles"]
+    problems = sorted(names ^ roles.keys()) + [r for r, t in roles.items() if t not in models["tiers"]]
+    if problems:
+        raise ValueError(f"models.json roles out of step with agents or tiers: {problems}")
 
 
 def build(out: Path) -> None:
-    tiers = json.loads((SRC / "models.json").read_text(encoding="utf-8"))["tiers"]
+    models = json.loads((SRC / "models.json").read_text(encoding="utf-8"))
     agents = [parse(p) for p in sorted((SRC / "agents").glob("*/agent.md"))]
+    check_models(models, {meta["name"] for meta, _ in agents})
     for meta, _ in agents:
         unknown = [r for r in meta["rules"] if not (SRC / "rules" / f"{r}.md").exists()]
-        if meta["tier"] not in tiers or unknown or meta["access"] not in ("write", "read-only", "no-write"):
-            raise ValueError(f"{meta['name']}: bad tier, access or rules {unknown}")
+        if unknown or meta["access"] not in ("write", "read-only", "no-write"):
+            raise ValueError(f"{meta['name']}: bad access or rules {unknown}")
     version = json.loads((ROOT / "claude" / "manifest" / "plugin.json").read_text())["version"]
-    build_claude(out, agents, tiers)
+    build_claude(out, agents, models)
     build_gemini(out, version)
 
 

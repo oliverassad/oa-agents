@@ -1,7 +1,6 @@
 ---
 name: architect
 description: Technical architect. Runs once per milestone and writes the blueprint to .agents/plans/<milestone-slug>-architecture.md. Blueprint, never code.
-tier: plan-fable
 access: write
 rules: [area/api, area/db, area/ui, area/testing, area/deps, area/infra]
 ---

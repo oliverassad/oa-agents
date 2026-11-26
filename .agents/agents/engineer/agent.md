@@ -1,7 +1,6 @@
 ---
 name: engineer
 description: Software engineer. One ticket in an area no specialist engineer owns (scripts, tooling, shared libraries). Failing test first.
-tier: build
 access: write
 rules: [lang/typescript, lang/python, area/testing, area/deps]
 ---

@@ -11,7 +11,7 @@ The main session is the orchestrator: a subagent cannot dispatch another. It wri
 
 1. Modes: ponytail ultra and caveman ultra lines in context (BOOT BT-2). Missing: call both skills now.
 2. Composio loaded (BOOT AC-2).
-3. Project facts: read `AGENTS.md`. Note `## Tracker`, `## Stack`, `## Commands`, `## Area to suites`, `## Roles`.
+3. Project facts: read `AGENTS.md`. Note `## Tracker`, `## Stack`, `## Commands`, `## Deploy`, `## Area to suites`, `## Roles`. Read `.agents/models.json` if the project has one.
 4. Tracker unknown: list Linear teams and projects through Composio, ask the operator which board, write it into `## Tracker` (BOOT TK-2).
 
 ## 1. Ticket (always first)
@@ -27,6 +27,7 @@ Read-only questions skip this step.
 
 | Ask | Pipeline |
 | --- | --- |
+| New project, or no `AGENTS.md` yet | Skill `bootstrap-project` (milestone M0) |
 | One small change, one area | Patch: 4, 6, 9, 10 |
 | Several tickets or areas | Milestone: 3 to 11 |
 | Article, guide, figure | Content (below) |
@@ -104,7 +105,8 @@ At the end of each milestone (after Done, or after a red deploy is closed):
 ## Dispatch rules
 
 - Role resolution: use the project agent `<role>` when `.claude/agents/<role>.md` exists, else `team:<role>`.
-- Models come from the agent definition. Pass no model by hand unless the operator asks.
+- Models: the shared `models.json` (in the plugin root: `roles` to `tiers`) sets each role's default; agent files name no model. A project `.agents/models.json` may override `roles` (role to tier) or `tiers` (tier to model). When it changes a role's model, pass that `claude` value as `model` on the dispatch; else pass none. Effort cannot be passed on a dispatch; it stays at the tier default.
+- A hard ticket may move up one tier for that dispatch only (for example `build` to `plan`). Say so in the dispatch line to the operator.
 - Run independent agents in one message so they run in parallel.
 - A report is evidence (DELEGATION DL-6). Verify the diff before it reaches a ticket or a commit.
 - Never paste a report into chat; relay the verdict and paths (STYLE CM-13).

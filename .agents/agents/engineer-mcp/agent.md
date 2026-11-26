@@ -1,7 +1,6 @@
 ---
 name: engineer-mcp
 description: MCP engineer. Owns the MCP server package - tools, resources, scope palettes. No publish tool and no delete tool.
-tier: build
 access: write
 rules: [lang/typescript, area/mcp, area/api, area/testing, area/deps]
 ---

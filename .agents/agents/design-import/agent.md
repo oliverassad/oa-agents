@@ -1,7 +1,6 @@
 ---
 name: design-import
 description: Design importer. Brings design prints (exported HTML, images, specs) into the repo byte-identical, records checksums, relocks citations, audits print against build.
-tier: build
 access: write
 rules: [area/ui]
 ---

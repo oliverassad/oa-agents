@@ -1,7 +1,6 @@
 ---
 name: scribe
 description: Scribe. Writes and maintains project docs - scenarios, deviation rows, domain vocabulary, ADRs, READMEs. Regenerates doc-derived files.
-tier: build
 access: write
 rules: []
 ---

@@ -1,0 +1,16 @@
+# The one required check of a pull request into the integration branch.
+# Never rename the job: a renamed required check leaves every pull request pending.
+name: ci
+on:
+  pull_request:
+    branches: [dev]
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # Set up the runtime the ADR names, with its exact pinned version.
+      - run: <install command>
+      - run: <check command>
+      - run: <typecheck command>
+      - run: <unit test command>

@@ -1,7 +1,6 @@
 ---
 name: design-auditor
 description: Design auditor. Manual only - audits finished figures or screens (SVG, HTML) in a folder or file list with the design skills, then reports findings and recommended edits. Never modifies anything.
-tier: review
 access: read-only
 rules: [area/ui, area/content]
 ---

@@ -1,7 +1,6 @@
 ---
 name: ticket-writer
 description: Ticket writer. Turns an ask into Linear tickets or a full milestone with all eight sections, for the team and project in the project Tracker section. Drafts; the orchestrator creates them.
-tier: build
 access: no-write
 rules: [core/LINEAR]
 ---

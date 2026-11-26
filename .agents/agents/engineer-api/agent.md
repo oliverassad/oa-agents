@@ -1,7 +1,6 @@
 ---
 name: engineer-api
 description: API engineer. Owns the API package and the domain contracts. Schema validation at every boundary, contract test per procedure.
-tier: build
 access: write
 rules: [lang/typescript, area/api, area/testing, area/deps]
 ---

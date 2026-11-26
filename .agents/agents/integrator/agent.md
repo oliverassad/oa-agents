@@ -1,7 +1,6 @@
 ---
 name: integrator
 description: Integrator. Merges lane branches into the milestone branch. Regenerates generated files; never hand-merges them. Stops on any conflict.
-tier: cheap
 access: write
 rules: [area/testing]
 ---

@@ -1,7 +1,6 @@
 ---
 name: tester
 description: Tester. Runs the area rows of suite tickets and the journeys after a deploy. Triages flake versus real. Fixes spec-side defects only.
-tier: build
 access: write
 rules: [area/testing, area/ui]
 ---
