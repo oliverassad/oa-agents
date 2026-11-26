@@ -1,0 +1,7 @@
+{
+  "name": "team",
+  "version": "0.1.0",
+  "description": "Shared role agents (architect, engineers, tester, auditor, content and graphics), the orchestrator, my-voice, svg-figures and the shared rules.",
+  "author": { "name": "Oliver Assad" },
+  "repository": "https://github.com/oliverassad/oa-claude"
+}

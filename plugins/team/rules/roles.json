@@ -1,0 +1,91 @@
+{
+  "architect": [
+    "area/api",
+    "area/db",
+    "area/ui",
+    "area/testing",
+    "area/deps",
+    "area/infra"
+  ],
+  "auditor": [
+    "lang/typescript",
+    "lang/svelte",
+    "lang/python",
+    "area/api",
+    "area/mcp",
+    "area/db",
+    "area/ui",
+    "area/testing",
+    "area/deps",
+    "area/infra"
+  ],
+  "content-writer": [
+    "area/content"
+  ],
+  "design-auditor": [
+    "area/ui",
+    "area/content"
+  ],
+  "design-import": [
+    "area/ui"
+  ],
+  "docs-scout": [
+    "area/deps"
+  ],
+  "engineer": [
+    "lang/typescript",
+    "lang/python",
+    "area/testing",
+    "area/deps"
+  ],
+  "engineer-api": [
+    "lang/typescript",
+    "area/api",
+    "area/testing",
+    "area/deps"
+  ],
+  "engineer-db": [
+    "lang/typescript",
+    "lang/python",
+    "area/db",
+    "area/testing",
+    "area/deps"
+  ],
+  "engineer-infra": [
+    "lang/python",
+    "area/infra",
+    "area/deps"
+  ],
+  "engineer-mcp": [
+    "lang/typescript",
+    "area/mcp",
+    "area/api",
+    "area/testing",
+    "area/deps"
+  ],
+  "engineer-ui": [
+    "lang/typescript",
+    "lang/svelte",
+    "area/ui",
+    "area/testing",
+    "area/deps"
+  ],
+  "graphics-builder": [
+    "area/ui"
+  ],
+  "graphics-content-architect": [
+    "area/content",
+    "area/ui"
+  ],
+  "integrator": [
+    "area/testing"
+  ],
+  "scribe": [],
+  "tester": [
+    "area/testing",
+    "area/ui"
+  ],
+  "ticket-writer": [
+    "core/LINEAR"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "tiers": {
+    "plan": { "claude": "opus", "gemini": "gemini-4-argon-high" },
+    "plan-fable": { "claude": "fable", "effort": "medium", "gemini": "gemini-4-argon-high" },
+    "build": { "claude": "sonnet", "gemini": "gemini-3.8-flash-medium" },
+    "review": { "claude": "sonnet", "gemini": "gemini-3.8-flash-medium" },
+    "review-fable": { "claude": "fable", "effort": "low", "gemini": "gemini-3.8-flash-medium" },
+    "cheap": { "claude": "haiku", "gemini": "gemini-3.8-flash-low" }
+  }
+}
