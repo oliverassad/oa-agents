@@ -23,7 +23,8 @@ test('the band shows the caveman mode and rtk savings, and a click steps the mod
 
   const ui = await $.ui.mount({ ...BAND, surface: 'desktop' })
   await ui.press({ key: 'mode' })
-  expect(ran).toEqual(['caveman:caveman megacave'])
+  await ui.press({ key: 'mode' })
+  expect(ran).toEqual(['caveman:caveman megacave', 'caveman:caveman off'])
   await ui.unmount()
 })
 

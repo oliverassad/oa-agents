@@ -61,10 +61,11 @@ export const register: Register = on => {
     const r = await read($, rtk)
     const { Box, Text, Button } = $.ui.resolve(e)
     // One click steps to the next mode; caveman's own command does the switch, so its tracker stays the only logic.
+    // Steps from the stored mode, not this drawing's: a second click before the redraw must not repeat the first.
     const step = async () => {
-      const to = MODES[(MODES.indexOf(m) + 1) % MODES.length]
-      await update($, mode, () => to)
-      await $.command.run({ command: 'caveman:caveman', args: to })
+      const to = await update($, mode, cur => MODES[(MODES.indexOf(cur) + 1) % MODES.length] ?? 'off')
+      // Not awaited: the command runs a whole turn, past a press's 10 s budget.
+      void $.command.run({ command: 'caveman:caveman', args: to }).catch(() => $.ui.toast(`caveman: could not switch to ${to}`))
     }
 
     const row = (
