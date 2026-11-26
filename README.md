@@ -29,6 +29,10 @@ To install only the plugin from inside Claude Code:
 /plugin install team --marketplace oliverassad/oa-claude
 ```
 
+## Boot status
+
+At the start of each session, `hooks/status.py` shows a five-line status: rules, agents and skills, modes (caveman, ponytail, rtk), the Linear project from `## Tracker` in the project `AGENTS.md`, and the GitHub repository. Test: `python3 hooks/test_status.py`.
+
 ## Change
 
 Agent files carry no `model` (Gemini refuses Claude names); `MODELS.md` holds the map.

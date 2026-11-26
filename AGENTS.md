@@ -6,6 +6,7 @@ Shared rules for every project and every agent. The project's own `AGENTS.md` wi
 
 Run these checks at the start of every session and every agent run, before any other work.
 
+0. The plugin's SessionStart hook (`hooks/status.py`) shows the boot status block to the operator: rules, agents and skills, modes, Linear project, GitHub repository. The first reply of a session opens with that block, before any work on the request. A line that says `missing` or `off` is fixed before the request.
 1. `CAVEMAN MODE ACTIVE` and `PONYTAIL MODE ACTIVE` are in context (both plugins inject them into the session and every subagent). Missing: call Skill `caveman:caveman` and Skill `ponytail:ponytail` with `ultra`.
 2. The project `AGENTS.md` is read: Tracker, stack, commands, paths, models. Missing: the main session runs Skill `new-project`.
 3. Composio tools are loaded if the task touches an outside service.
@@ -29,7 +30,7 @@ A subagent takes the ticket, the branch and the plan from its prompt.
 
 Every change follows these steps in order. Step 5 is for code only.
 
-1. Ticket. Every code or infrastructure change starts from a Linear ticket or milestone; content and questions do not. The board comes from `## Tracker` in the project `AGENTS.md`. None: ask which board, then write it there.
+1. Ticket. Every code or infrastructure change starts from a Linear ticket or milestone; content and questions do not. The board comes from `## Tracker` in the project `AGENTS.md`. None: ask which board, then write it there. Each GitHub repository has its own Linear project with the same name as the repository (`oliverassad/oa-claude` is project `oa-claude`). A ticket goes in the project of the repository it changes. A repository with no project: create the project first, named like the repository, with the description `GitHub: <owner>/<repo>`.
 2. Branch. One branch per ticket or milestone (`content/<slug>` for content in a repo). Never commit to `main`.
 3. Read. Read the ticket, your plan section, the briefs, and every file you will change and its callers.
 4. Docs. Take every library snippet from Firecrawl, as below.

@@ -1,6 +1,6 @@
 {
   "name": "team",
-  "version": "1.8.1",
+  "version": "1.9.0",
   "description": "Shared rules, agents and skills for every project.",
   "author": {
     "name": "Oliver Assad"
@@ -13,6 +13,11 @@
           {
             "type": "command",
             "command": "cat \"${CLAUDE_PLUGIN_ROOT}/AGENTS.md\" \"${CLAUDE_PLUGIN_ROOT}/MODELS.md\""
+          },
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/status.py\"",
+            "timeout": 10
           }
         ]
       }
