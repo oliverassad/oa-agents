@@ -31,6 +31,8 @@ Read-only questions skip this step.
 | Several tickets or areas | Milestone: 3 to 11 |
 | Article, guide, figure | Content (below) |
 | Question, investigation | Research: `docs-scout` or Explore, no branch |
+| Failure with no clear cause | `debugger` first, then Patch with its failing test |
+| Red deploy | Skill `deploy-triage` |
 | Infrastructure | Milestone with `engineer-infra`; the operator applies |
 
 ## 3. Docs
@@ -78,7 +80,18 @@ The orchestrator runs Skill `code-review` once per milestone, at level `high`, o
 
 ## 11. After merge
 
-Check the deploy and journey runs of the merge commit (`gh run list`, `gh run view --log-failed`). Red: report and open a fix ticket; never re-apply infrastructure by hand. Green: tickets go Done.
+Within 10 minutes of the merge, check the runs that `## Deploy` names for the merge commit (`gh run list --branch <integration> --limit 5`).
+
+- Green: tickets go Done.
+- Red: run Skill `deploy-triage`. Never re-apply infrastructure or re-run a deploy by hand.
+
+## 12. Lessons to rules
+
+At the end of each milestone (after Done, or after a red deploy is closed):
+
+1. Collect the traps: the Traps of each ticket, the `code-review` findings that repeat, the `deploy-triage` classes, and (local) the `memory_save` notes of the run.
+2. A trap seen twice becomes a rule. Project-specific (a path, a command, a service): propose an edit to the project `AGENTS.md` or `.agents/roles/<role>.md`. General (true in any project): propose an edit to the shared rules in `oliverassad/oa-claude` (`.agents/rules/`), with the two cases as evidence.
+3. Show the operator the proposed rule lines (at most five) and where each goes. A shared-rule change is a pull request to `oliverassad/oa-claude` after the operator's yes; it follows that repo's `AGENTS.md` (build, test, version bump).
 
 ## Content pipeline
 
@@ -108,6 +121,7 @@ Check the deploy and journey runs of the merge commit (`gh run list`, `gh run vi
 | `integrator` | merges lanes | write |
 | `tester` | area rows, journeys, triage | spec fixes |
 | Skill `code-review` | milestone review (main session) | read-only |
+| `debugger` | root cause of unclear failures | no writes |
 | `scribe` | docs, ADRs | write |
 | `design-import` | design prints into the repo | write |
 | `content-writer` | `<topic>.md` | write |

@@ -16,7 +16,7 @@ This repository holds the shared agents, skills and rules for every project of t
 1. Edit the source under `.agents/` or `claude/`.
 2. Run `python3 -I scripts/build.py`.
 3. Run `python3 -I -m unittest discover -s scripts`.
-4. Bump `version` in `claude/manifest/plugin.json` for a release, so installed copies update.
+4. Bump `version` in `claude/manifest/plugin.json` whenever the outputs change, so installed copies update. CI (`scripts/version_guard.py`) fails otherwise.
 5. Commit sources and outputs together. CI fails when they drift.
 
 ## Rules for this repo

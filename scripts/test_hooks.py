@@ -41,5 +41,14 @@ class Hooks(unittest.TestCase):
         self.assertIsNone(guard.ABSOLUTE.search("git status"))
 
 
+class VersionGuard(unittest.TestCase):
+    def test_output_change_needs_a_new_version(self):
+        sys.path.insert(0, str(ROOT / "scripts"))
+        from version_guard import decide
+        self.assertIsNotNone(decide(["plugins/team/agents/tester.md"], "0.1.1", "0.1.1"))
+        self.assertIsNone(decide(["plugins/team/agents/tester.md"], "0.1.1", "0.2.0"))
+        self.assertIsNone(decide(["README.md"], "0.1.1", "0.1.1"))
+
+
 if __name__ == "__main__":
     unittest.main()

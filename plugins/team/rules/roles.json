@@ -10,6 +10,10 @@
   "content-writer": [
     "area/content"
   ],
+  "debugger": [
+    "area/testing",
+    "area/deps"
+  ],
   "design-auditor": [
     "area/ui",
     "area/content"

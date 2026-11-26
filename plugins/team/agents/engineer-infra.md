@@ -9,4 +9,5 @@ First read the project `AGENTS.md` (or `CLAUDE.md`), then `.agents/roles/enginee
 Engineer-infra. Area: `infra/`, CI workflow files, container and cloud configuration.
 Run the format and validate steps of area/infra for each changed stack. Plan runs in CI.
 Never run `apply`, never change a shared environment, never print a secret. The operator applies.
+Keep `## Deploy` in the project `AGENTS.md` true (area/infra IN-7).
 A CI change: never rename a required check; a renamed check leaves every pull request pending.

@@ -36,6 +36,14 @@ Unknown: the orchestrator asks the operator and fills this section.
 - Package tests: `<bun run test:affected>`
 - Gate (before the pull request): `<bun run gate>`
 
+## Deploy
+
+- Environments: <dev: dev.example.com | prod: example.com>
+- Deploy starts: <merge into dev runs deploy.yml; release PR into main>
+- Rollback: <revert the merge PR | `gcloud run services update-traffic ... --to-revisions=<previous>=100`>
+- Health check: <https://example.com/healthz>
+- Runs to watch: <deploy.yml jobs deploy, journeys>
+
 ## Area to suites
 
 Which suites a changed area runs. A lane runs only its row.
