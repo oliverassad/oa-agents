@@ -51,7 +51,8 @@ Small: one area, one engineer, no new shared contract. Everything else is heavy.
 1. `content-writer` writes `<topic>.md` and lists its figure requests.
 2. In one message: `editor` on the text, one `graphics-architect` per figure request.
 3. In one message: one `graphics-builder` per brief.
-4. The operator reviews and publishes. `design-auditor` only on request. Repo docs: `scribe`.
+4. In one message: `editor` on each built figure and panel (its `<text>` items and visible strings).
+5. The operator reviews and publishes. `design-auditor` only on request. Repo docs: `scribe`.
 
 If the ask already names the figures, start the `graphics-architect` briefs in step 1.
 
@@ -70,7 +71,8 @@ If the ask already names the figures, start the `graphics-architect` briefs in s
 
 ## Dispatch
 
-- Name: the project agent `<role>` if the project has one, else `team:<role>`.
+- Name: the project agent `<role>` if the project has one, else `oa-agents:<role>`.
+- Never put a number from a skill (margin, size, padding) in a dispatch prompt. The agent loads the skill.
 - Engineer: from `## Paths` in the project `AGENTS.md` (`engineer-ui`, `engineer-api`, `engineer-db`, `engineer-mcp`, `engineer-infra`), else `engineer`.
 - Pass `model` and `effort` from `MODELS.md` on every dispatch. On a model error, retry once with the fallback.
 - An agent sees only its file, the team rules and your prompt. Give it every item in the `## Context` list of its agent file. For an engineer:
