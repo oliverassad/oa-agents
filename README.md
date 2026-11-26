@@ -29,6 +29,10 @@ To install only the plugin from inside Claude Code:
 /plugin install team --marketplace oliverassad/oa-claude
 ```
 
+## Band
+
+In Claude Code the plugin adds a row above the prompt: the caveman mode and the tokens rtk saved (`rtk gain`). A click on the mode steps it through `off`, `caveman`, `ultracave` and `megacave` with `/caveman:caveman`. The row has no rtk part when rtk is not installed. Gemini CLI has no such row. The code is in `hooks/band/`.
+
 ## Change
 
 Agent files carry no `model` (Gemini refuses Claude names); `MODELS.md` holds the map.
