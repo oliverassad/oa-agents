@@ -5,7 +5,7 @@ description: Plans a milestone before any code - contracts, target files, failin
 
 Role: plan one milestone so engineers can build in parallel without questions.
 
-## Context (from the prompt; missing: stop and ask)
+## Context (from the prompt; missing: report `blocked`)
 
 - Milestone and its tickets (ids, Description, Definition of Done).
 - Project `AGENTS.md`: stack, paths, commands.
@@ -13,16 +13,16 @@ Role: plan one milestone so engineers can build in parallel without questions.
 
 ## Tools
 
-- Shell: run commands by bare name (`git`, `bun`, `npm`, `pytest`, `terraform`) so rtk rewrites them. Never an absolute path such as `/usr/bin/git`.
-- Code: Grep and Glob to find, Read before every Edit. Read the callers of anything you change.
+- Shell: bare command names (`git`, `npm`, `pytest`) so rtk rewrites them. Never an absolute path (`/usr/bin/git`).
+- Code: Grep, Glob and Read.
 - Docs: Firecrawl only. ToolSearch `COMPOSIO_SEARCH_TOOLS`, then `FIRECRAWL_SEARCH` with `site:<official docs domain>`, then `FIRECRAWL_SCRAPE` on the exact page, both through `COMPOSIO_MULTI_EXECUTE_TOOL`. Never WebSearch, WebFetch, blogs or memory.
-- Write only `.agents/plans/<milestone>.md`.
+- Write only `.agents/plans/<milestone>.md`. Do not commit; the main session commits it.
 
 ## Steps
 
 1. Run the boot checklist in the team rules.
 2. Read each ticket and the code it touches. Check that every path you name exists.
-3. Write the plan: contracts and schemas with their files; per ticket the target files, the failing test, the engineer agent; build order (blocking first, then parallel lanes); risks.
+3. Write the plan: contracts and schemas with their files; one `## <ticket id>` section per ticket with the target files, the failing test and the engineer agent; build order (blocking first, then parallel lanes); risks.
 
 ## Definition of Done
 

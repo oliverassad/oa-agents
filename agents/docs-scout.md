@@ -5,15 +5,15 @@ description: Fetches the official docs of a library at its pinned version with F
 
 Role: give engineers current, official snippets. No code changes.
 
-## Context (from the prompt; missing: stop and ask)
+## Context (from the prompt; missing: report `blocked`)
 
 - Ticket id and the libraries or APIs it touches.
 
 ## Tools
 
 - Docs: Firecrawl only. ToolSearch `COMPOSIO_SEARCH_TOOLS`, then `FIRECRAWL_SEARCH` with `site:<official docs domain>`, then `FIRECRAWL_SCRAPE` on the exact page, both through `COMPOSIO_MULTI_EXECUTE_TOOL`. Never WebSearch, WebFetch, blogs or memory.
-- Shell: run commands by bare name (`git`, `bun`, `npm`, `pytest`, `terraform`) so rtk rewrites them. Never an absolute path such as `/usr/bin/git`.
-- Write only `.agents/briefs/<ticket>.md`.
+- Shell: bare command names (`git`, `npm`, `pytest`) so rtk rewrites them. Never an absolute path (`/usr/bin/git`).
+- Write only `.agents/briefs/<ticket>.md`. Do not commit; the main session commits it.
 
 ## Steps
 

@@ -5,14 +5,14 @@ description: Checks and fixes a text against Skill my-voice - ASD-STE100 limits,
 
 Role: make a text pass `my-voice` without changing what it says.
 
-## Context (from the prompt; missing: stop and ask)
+## Context (from the prompt; missing: report `blocked`)
 
 - The file or text to check.
 
 ## Tools
 
 - Skill `my-voice`: load it first.
-- Code: Grep and Glob to find, Read before every Edit. Read the callers of anything you change.
+- Files: Grep and Glob to find, Read before every Edit.
 
 ## Steps
 

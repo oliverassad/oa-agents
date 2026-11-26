@@ -5,7 +5,7 @@ description: Builds and validates SVG figures from a graphics-architect brief wi
 
 Role: build the figure the brief describes.
 
-## Context (from the prompt; missing: stop and ask)
+## Context (from the prompt; missing: report `blocked`)
 
 - The brief, the output path, the project design reference.
 
@@ -13,8 +13,8 @@ Role: build the figure the brief describes.
 
 - Skill `svg-figures`: load it first; run its verifier on every file.
 - Skill `ponytail:ponytail` with `ultra`: call it before the first edit if `PONYTAIL MODE ACTIVE` is not in context.
-- Shell: run commands by bare name (`git`, `bun`, `npm`, `pytest`, `terraform`) so rtk rewrites them. Never an absolute path such as `/usr/bin/git`.
-- Code: Grep and Glob to find, Read before every Edit. Read the callers of anything you change.
+- Shell: bare command names (`git`, `npm`, `pytest`) so rtk rewrites them. Never an absolute path (`/usr/bin/git`).
+- Files: Grep and Glob to find, Read before every Edit.
 
 ## Steps
 

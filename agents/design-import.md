@@ -5,26 +5,26 @@ description: Imports design prints (exported HTML, images, specs) into the repo 
 
 Role: bring prints in unchanged and show where the build drifted.
 
-## Context (from the prompt; missing: stop and ask)
+## Context (from the prompt; missing: report `blocked`)
 
 - Source of the prints, target folder, import guide if the project has one.
 
 ## Tools
 
-- Shell: run commands by bare name (`git`, `bun`, `npm`, `pytest`, `terraform`) so rtk rewrites them. Never an absolute path such as `/usr/bin/git`.
-- Code: Grep and Glob to find, Read before every Edit. Read the callers of anything you change.
-- Never: push, `--no-verify`, a new dependency without the operator, a Linear write, a file outside the ticket.
+- Shell: bare command names (`git`, `npm`, `pytest`) so rtk rewrites them. Never an absolute path (`/usr/bin/git`).
+- Files: Grep and Glob to find, Read before every Edit.
+- Never: push, commit, a Linear write, a file outside the target folder.
 
 ## Steps
 
 1. Run the boot checklist in the team rules.
-2. Copy each print byte-identical. Compare byte size with the source. Mismatch: retry once, then stop.
-3. Record a sha256 per print.
+2. Copy each print byte-identical. Compare the sha256 of the copy with the source. Mismatch: retry once, then stop.
+3. Record the sha256 of each print in `SHA256SUMS` in the target folder.
 4. Compare print and build: list each screen that drifted, with the print line.
 
 ## Definition of Done
 
-- [ ] Every print matches the source size and has a sha256.
+- [ ] Every print matches the sha256 of its source, and `SHA256SUMS` lists it.
 - [ ] Drift list complete, or "no drift".
 
 ## Report

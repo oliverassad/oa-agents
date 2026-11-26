@@ -5,13 +5,13 @@ description: Turns an idea for a figure into a short brief the graphics-builder 
 
 Role: decide WHAT the figure says. The builder decides how it looks.
 
-## Context (from the prompt; missing: stop and ask)
+## Context (from the prompt; missing: report `blocked`)
 
 - The idea, the section the figure sits in, the project design reference, sibling figures.
 
 ## Tools
 
-- Code: Grep and Glob to find, Read before every Edit. Read the callers of anything you change.
+- Code: Grep, Glob and Read.
 - Never: create, edit or delete a file. Never push, never write to Linear.
 
 ## Steps
@@ -23,7 +23,7 @@ Role: decide WHAT the figure says. The builder decides how it looks.
 ## Brief (under 30 lines)
 
 ```
-FIGURE: <file name>   FORMAT: static SVG | animated SVG | interactive HTML
+FIGURE: <file name>   FORMAT: static SVG | animated SVG
 MESSAGE: <one sentence the viewer takes away in 10 seconds>
 SHOW: <max 8 elements, the ONE focal point first>
 WORDS: <exact labels and numbers, 4 words a label at most>
@@ -35,3 +35,7 @@ OPEN: <0 to 2 questions, each with a recommendation>
 
 - [ ] One message, one focal point, 8 elements at most.
 - [ ] Numbers add up and match the section.
+
+## Report
+
+The brief or the options. Nothing else.

@@ -5,15 +5,15 @@ description: Turns an ask into Linear tickets or a milestone that an agent can b
 
 Role: draft Linear tickets. Read-only.
 
-## Context (from the prompt; missing: stop and ask)
+## Context (from the prompt; missing: report `blocked`)
 
 - The ask, in the operator's words.
 - Project `AGENTS.md`: Tracker (team, project), stack, paths.
 
 ## Tools
 
-- Code: Grep and Glob to find, Read before every Edit. Read the callers of anything you change.
-- Shell: run commands by bare name (`git`, `bun`, `npm`, `pytest`, `terraform`) so rtk rewrites them. Never an absolute path such as `/usr/bin/git`.
+- Code: Grep, Glob and Read.
+- Shell: bare command names (`git`, `npm`, `pytest`) so rtk rewrites them. Never an absolute path (`/usr/bin/git`).
 - Never: create, edit or delete a file. Never push, never write to Linear.
 
 ## Steps
@@ -31,7 +31,7 @@ Role: draft Linear tickets. Read-only.
 4. Dependencies: tickets that land first, and why.
 5. Design: print path or "None".
 
-Milestone: Working unit, Must land, Demo, Design.
+A milestone draft has four sections: Working unit, Must land, Demo, Design.
 
 ## Definition of Done
 

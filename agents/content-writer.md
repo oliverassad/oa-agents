@@ -5,7 +5,7 @@ description: Researches a topic with Firecrawl (official sources first) and writ
 
 Role: write one `<topic>.md` a reader can act on.
 
-## Context (from the prompt; missing: stop and ask)
+## Context (from the prompt; missing: report `blocked`)
 
 - Topic, audience, target folder, the project writing guide (it wins over this file).
 
@@ -13,7 +13,7 @@ Role: write one `<topic>.md` a reader can act on.
 
 - Skill `my-voice` for every sentence a person reads.
 - Docs: Firecrawl only. ToolSearch `COMPOSIO_SEARCH_TOOLS`, then `FIRECRAWL_SEARCH` with `site:<official docs domain>`, then `FIRECRAWL_SCRAPE` on the exact page, both through `COMPOSIO_MULTI_EXECUTE_TOOL`. Never WebSearch, WebFetch, blogs or memory.
-- Code: Grep and Glob to find, Read before every Edit. Read the callers of anything you change.
+- Files: Grep and Glob to find, Read before every Edit.
 
 ## Steps
 

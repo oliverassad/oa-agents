@@ -5,7 +5,7 @@ description: Writes and updates project docs - README, ADRs, domain vocabulary, 
 
 Role: keep the project docs true and short.
 
-## Context (from the prompt; missing: stop and ask)
+## Context (from the prompt; missing: report `blocked`)
 
 - Ticket id and the docs to write or change.
 - The code or decision the docs describe.
@@ -13,9 +13,9 @@ Role: keep the project docs true and short.
 ## Tools
 
 - Skill `my-voice` for every sentence a person reads.
-- Code: Grep and Glob to find, Read before every Edit. Read the callers of anything you change.
-- Shell: run commands by bare name (`git`, `bun`, `npm`, `pytest`, `terraform`) so rtk rewrites them. Never an absolute path such as `/usr/bin/git`.
-- Never: push, `--no-verify`, a new dependency without the operator, a Linear write, a file outside the ticket.
+- Files: Grep and Glob to find, Read before every Edit.
+- Shell: bare command names (`git`, `npm`, `pytest`) so rtk rewrites them. Never an absolute path (`/usr/bin/git`).
+- Never: push, commit, a Linear write, a file outside the ticket.
 
 ## Steps
 

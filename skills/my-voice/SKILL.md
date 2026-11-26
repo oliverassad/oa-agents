@@ -5,7 +5,7 @@ description: Oliver's writing voice for any text a person reads - docs, guides, 
 
 # My voice
 
-Every text a person reads follows ASD-STE100 Simplified Technical English. No exception.
+Every text a person reads follows ASD-STE100 Simplified Technical English. No exception. Section 2 applies only to a text that teaches, not to a ticket, commit or comment.
 
 ## 1. Language (ASD-STE100)
 
@@ -54,7 +54,7 @@ Every text a person reads follows ASD-STE100 Simplified Technical English. No ex
 
 Source: Wikipedia, "Signs of AI writing". These patterns mark text as machine-written.
 
-- **AI vocabulary:** additionally, align with, boasts, bolstered, crucial, delve, emphasizing, enduring, enhance, foster, garner, highlighting, interplay, intricate, landscape, leverage, meticulous, multifaceted, pivotal, quietly, showcasing, tapestry, testament, underscore, vibrant.
+- **AI vocabulary:** every word in section 3, and: align with, boasts, emphasizing, enduring, garner, interplay, intricate, landscape, meticulous, multifaceted, quietly, tapestry, testament, underscore, vibrant.
 - **Copula avoidance:** "serves as", "stands as", "functions as", "represents", "boasts", "features". Write "is" or "has".
 - **Negative parallelism:** "not just X, but also Y", "not X, but Y", "Y rather than X".
 - **Rule of three:** lists of three adjectives or three phrases for rhythm. Give the real number of items.

@@ -23,7 +23,7 @@ python3 -I <skill-dir>/verify_svg.py <figure.svg>
 
 ## 2. Structure
 
-6. One root `<svg>` with a `viewBox` and a `<title>` (and `<desc>` when needed). No `width` or `height`.
+6. One root `<svg>` with a `viewBox` and a `<title>` (and `<desc>` when needed).
 7. One `<style>` block with plain class selectors, or presentation attributes.
 8. `font-family: var(--font-sans)` or `var(--font-mono)` only. No `@font-face`.
 9. Under 200 KB, 5,000 elements and 20 levels.
@@ -43,7 +43,7 @@ python3 -I <skill-dir>/verify_svg.py <figure.svg>
 
 ## 4b. Output
 
-17. Give the figure alt text: its accessible name.
+17. The `<title>` is the alt text: it says what the figure shows.
 18. Transparent ground: no opaque background rect.
 19. Text contrast at least 4.5:1 in both themes; nothing clipped at 2480 px or 375 px wide.
 

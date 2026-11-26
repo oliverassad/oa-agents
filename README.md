@@ -9,7 +9,7 @@ Shared rules, agents and skills for every project. One repository is both a Clau
 | `agents/` | 19 agents, one per job (see `skills/orchestrator/SKILL.md`) | `team:<name>` | loaded |
 | `skills/` | orchestrator, new-project, my-voice, svg-figures | `team:<name>` | auto-discovered |
 
-Expects caveman and ponytail to be installed. Project facts (Linear board, stack, commands) live in each project's `AGENTS.md`.
+This repository does not install three things that the team needs: the caveman plugin, the ponytail plugin and the Composio MCP server. Connect Linear, GitHub and Firecrawl in Composio. Project facts (Linear board, stack, commands) live in each project's `AGENTS.md`. Skill `new-project` writes that file.
 
 ## Install
 
@@ -19,7 +19,13 @@ Local machine or cloud environment setup script:
 curl -fsSL https://raw.githubusercontent.com/oliverassad/oa-claude/main/install.sh | sh
 ```
 
-It installs rtk, then the team plugin for Claude Code and the extension for Gemini CLI, whichever is present.
+It installs rtk, then the team plugin for Claude Code and the extension for Gemini CLI, whichever is present. For Gemini CLI it also adds `AGENTS.md` to `context.fileName`, so Gemini loads the project `AGENTS.md`. Run it again to update.
+
+To install only the plugin from inside Claude Code:
+
+```
+/plugin install team --marketplace oliverassad/oa-claude
+```
 
 ## Change
 
