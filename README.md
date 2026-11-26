@@ -37,4 +37,4 @@ At the start of each session, `hooks/status.py` shows a six-line status: rules, 
 
 Agent files carry no `model` (Gemini refuses Claude names); `MODELS.md` holds the map.
 
-Edit the files, bump `version` in `.claude-plugin/plugin.json` and `gemini-extension.json`, push, then publish a GitHub release `v<version>` (`gh release create v<version>`). Gemini installs and updates from the latest release, not from `main`.
+Edit the files on a branch and bump `version` in `.claude-plugin/plugin.json` and `gemini-extension.json`. Open a pull request and squash-merge it: the `Protect main` ruleset blocks direct pushes, force-pushes and other merge methods, and every review thread must be resolved. Then publish a GitHub release `v<version>` (`gh release create v<version>`). Gemini installs and updates from the latest release, not from `main`. The `Protect release tags` ruleset blocks a move or delete of a `v*` tag, so a bad release gets a new version.
