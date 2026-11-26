@@ -7,6 +7,7 @@ import json
 import os
 import re
 import subprocess
+import sys
 from pathlib import Path
 
 HOME = Path.home()
@@ -51,16 +52,24 @@ def settings():
     return read(CLAUDE / "settings.json")
 
 
+def repo(project):
+    m = re.search(r"github\.com[:/](.+?)(\.git)?$", run("git", "remote", "get-url", "origin", cwd=project))
+    return m.group(1) if m else None
+
+
 def tracker(project):
     m = re.search(r"^## Tracker\s*\n+(.+)", read(Path(project) / "AGENTS.md"), re.M)
-    return m.group(1).strip() if m else "missing (no ## Tracker in AGENTS.md)"
+    if m:
+        return m.group(1).strip()
+    # Team rule: the Linear project has the same name as the repository.
+    name = repo(project)
+    return f"project {name.split('/')[-1]} (repository name)" if name else "missing (no ## Tracker, no GitHub origin)"
 
 
 def github(project):
-    url = run("git", "remote", "get-url", "origin", cwd=project)
-    m = re.search(r"github\.com[:/](.+?)(\.git)?$", url)
+    name = repo(project)
     branch = run("git", "branch", "--show-current", cwd=project)
-    return f"{m.group(1)} on {branch or 'detached'}" if m else "missing (no GitHub origin)"
+    return f"{name} on {branch or 'detached'}" if name else "missing (no GitHub origin)"
 
 
 def modes():
@@ -75,7 +84,8 @@ def modes():
 def block(plugin, project):
     lines = [
         f"Rules: team AGENTS.md {found(Path(plugin) / 'AGENTS.md')}, MODELS.md {found(Path(plugin) / 'MODELS.md')}, project AGENTS.md {found(Path(project) / 'AGENTS.md')}",
-        f"Agents and skills: team {count(plugin, 'agents/*.md')} agents, {count(plugin, 'skills/*/SKILL.md')} skills; project {count(Path(project) / '.claude', 'agents/*.md')} agents, {count(Path(project) / '.claude', 'skills/*/SKILL.md')} skills; MCP servers: {mcp_servers(project)}",
+        f"Agents and skills: team {count(plugin, 'agents/*.md')} agents, {count(plugin, 'skills/*/SKILL.md')} skills; project {count(Path(project) / '.claude', 'agents/*.md')} agents, {count(Path(project) / '.claude', 'skills/*/SKILL.md')} skills",
+        f"MCP: config {mcp_servers(project)}; Composio check (ToolSearch COMPOSIO_SEARCH_TOOLS)",
         f"Modes: {modes()}",
         f"Linear: {tracker(project)}",
         f"GitHub: {github(project)}",
@@ -85,7 +95,12 @@ def block(plugin, project):
 
 def output(plugin, project):
     text = block(plugin, project)
-    rule = "Team rule: the first reply of this session opens with this boot status block, verbatim, before any work on the request.\n\n"
+    rule = (
+        "Team rule: this block was taken while the other plugins still start, so a line can read off or missing. "
+        "Before the first reply: fix each missing or off line, run ToolSearch COMPOSIO_SEARCH_TOOLS, "
+        f"then run `python3 {Path(__file__).resolve()} --text` and open the first reply with that block, "
+        "with `Composio check` replaced by `Composio connected` or `Composio missing`. Every line must be green.\n\n"
+    )
     return {
         "systemMessage": text,
         "hookSpecificOutput": {"hookEventName": "SessionStart", "additionalContext": rule + text},
@@ -95,4 +110,4 @@ def output(plugin, project):
 if __name__ == "__main__":
     plugin = os.environ.get("CLAUDE_PLUGIN_ROOT", str(Path(__file__).resolve().parent.parent))
     project = os.environ.get("CLAUDE_PROJECT_DIR", os.getcwd())
-    print(json.dumps(output(plugin, project)))
+    print(block(plugin, project) if "--text" in sys.argv else json.dumps(output(plugin, project)))

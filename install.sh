@@ -1,6 +1,6 @@
 #!/bin/sh
 # Bootstrap rtk and the team plugin (Claude Code) or extension (Gemini CLI).
-#   curl -fsSL https://raw.githubusercontent.com/oliverassad/oa-claude/main/install.sh | sh
+#   curl -fsSL https://raw.githubusercontent.com/oliverassad/oa-agents/main/install.sh | sh
 # caveman and ponytail are installed separately (their own one-liners).
 curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/master/install.sh | sh
 export PATH="$HOME/.local/bin:$PATH"
@@ -8,16 +8,16 @@ ln -sf "$HOME/.local/bin/rtk" /usr/local/bin/rtk 2>/dev/null  # on PATH for late
 
 if command -v claude >/dev/null 2>&1; then
   rtk init --global --auto-patch
-  claude plugin marketplace add oliverassad/oa-claude
-  claude plugin install team@oa-claude
+  claude plugin marketplace add oliverassad/oa-agents
+  claude plugin install team@oa-agents
   # A second run updates.
-  claude plugin marketplace update oa-claude
-  claude plugin update team@oa-claude
+  claude plugin marketplace update oa-agents
+  claude plugin update team@oa-agents
 fi
 
 if command -v gemini >/dev/null 2>&1; then
   rtk init --gemini --global --auto-patch
-  gemini extensions install https://github.com/oliverassad/oa-claude --consent --auto-update
+  gemini extensions install https://github.com/oliverassad/oa-agents --consent --auto-update
   # Agent models and thinking levels from MODELS.md; project AGENTS.md as a context file.
   python3 - "$HOME/.gemini/extensions/team/MODELS.md" <<'PY'
 import json, pathlib, sys
