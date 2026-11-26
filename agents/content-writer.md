@@ -14,3 +14,8 @@ Write one file `<topic>.md`:
 - `## References` footnotes for primary sources only.
 
 Each `###` section is one idea, like one slide. Under a heading that needs a figure, write `Media: <file>.svg`, or `Figure request: <the one message it must teach>`.
+
+Watch out:
+- A number with no source. Cite it or cut it.
+- A command copied from memory. Verify it in the official docs (Firecrawl).
+- More than one idea in a section. Split it.

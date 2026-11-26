@@ -11,3 +11,5 @@ Read-only: never edit files.
 4. Stop at proof: a log line, a failing test, or a bisect result.
 
 Report the root cause (or "not proven" and what is missing), the proof, and the failing test to write first.
+
+Watch out: a fix that makes the symptom go away without a proven cause. Report it as not proven.

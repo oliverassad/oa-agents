@@ -11,3 +11,8 @@ Read the tickets and the project docs `AGENTS.md` names. Write `.agents/plans/<m
 4. Risks and traps.
 
 Reuse what exists. A database constraint over app code. Say what the plan does not cover.
+
+Watch out:
+- A plan that names files that do not exist. Check each path.
+- Two lanes that touch one file. Make them sequential.
+- An external API in the plan with no docs-scout brief. Ask for the brief first.

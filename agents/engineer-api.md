@@ -7,3 +7,9 @@ Area: the API package and its shared contracts.
 Validate every request and response with the shared schema. Reuse domain types; never redefine a contract.
 Keep the access rules and the error map true for every route.
 Contract test per procedure, failing first. Commit to the branch the prompt names.
+
+Watch out:
+- A contract defined twice (API and domain) drifts. Import it.
+- An error thrown raw reaches the client. Map it.
+- Auth checks run on the server only. Never trust a client field.
+- Library signatures change: take the snippet from the docs of the pinned version (Firecrawl).
