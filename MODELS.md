@@ -1,31 +1,37 @@
 # Models
 
-One map for every agent. Agent files name no model, so the same file works in Claude Code and Gemini CLI.
+One map for every agent. Agent files name no model and no effort, so the same file works in Claude Code and Gemini CLI.
 
-- **Claude Code:** the main session passes the Claude model on each dispatch (`model` parameter). If that model is not available, it passes the fallback.
-- **Gemini CLI:** `install.sh` writes the Gemini column to `~/.gemini/settings.json` (`agents.overrides`). If that model is not available, the agent inherits the main session model.
-- Gemini model names come from the Gemini CLI docs. Check them with `/model` in Gemini CLI.
+- **Claude Code:** the main session passes `model` and `effort` from this table on each dispatch. On a model error, it retries once with the fallback.
+- **Gemini CLI:** `install.sh` writes the model to `agents.overrides` and the thinking level to `modelConfigs.overrides` in `~/.gemini/settings.json`. Gemini has no per-agent fallback: switch the row by hand if a model is not available.
+- Gemini 4 models from the Gemini API docs (Firecrawl, 2026-11-26). No preview models. `gemini-4-argon` is left out: Gemini CLI is not optimized for it.
+- A project overrides a row in its own `AGENTS.md` under `## Models`.
 
-| Agent | Claude | Claude fallback | Gemini |
-| --- | --- | --- | --- |
-| architect | fable | opus | gemini-3-preview |
-| debugger | fable | opus | gemini-3-preview |
-| ticket-writer | opus | sonnet | gemini-3-preview |
-| graphics-architect | opus | sonnet | gemini-3-preview |
-| editor | opus | sonnet | gemini-3-preview |
-| engineer | sonnet | haiku | gemini-3-flash-preview |
-| engineer-ui | sonnet | haiku | gemini-3-flash-preview |
-| engineer-api | sonnet | haiku | gemini-3-flash-preview |
-| engineer-db | sonnet | haiku | gemini-3-flash-preview |
-| engineer-mcp | sonnet | haiku | gemini-3-flash-preview |
-| engineer-infra | sonnet | haiku | gemini-3-flash-preview |
-| tester | sonnet | haiku | gemini-3-flash-preview |
-| docs-scout | sonnet | haiku | gemini-3-flash-preview |
-| scribe | sonnet | haiku | gemini-3-flash-preview |
-| content-writer | sonnet | haiku | gemini-3-flash-preview |
-| graphics-builder | sonnet | haiku | gemini-3-flash-preview |
-| design-auditor | sonnet | haiku | gemini-3-flash-preview |
-| design-import | sonnet | haiku | gemini-3-flash-preview |
-| integrator | haiku | sonnet | gemini-3-flash-preview |
+| Agent | Claude | Claude effort | Claude fallback | Gemini | Gemini thinking | Gemini fallback |
+| --- | --- | --- | --- | --- | --- | --- |
+| architect | fable | high | opus | gemini-4-carbon | high | gemini-4-neon |
+| debugger | fable | high | opus | gemini-4-carbon | high | gemini-4-neon |
+| ticket-writer | opus | high | sonnet | gemini-4-neon | high | gemini-4-hydrogen |
+| graphics-architect | opus | high | sonnet | gemini-4-neon | high | gemini-4-hydrogen |
+| editor | opus | medium | sonnet | gemini-4-neon | medium | gemini-4-hydrogen |
+| engineer | sonnet | medium | opus | gemini-4-hydrogen | high | gemini-4-neon |
+| engineer-ui | sonnet | medium | opus | gemini-4-hydrogen | high | gemini-4-neon |
+| engineer-api | sonnet | medium | opus | gemini-4-hydrogen | high | gemini-4-neon |
+| engineer-db | sonnet | medium | opus | gemini-4-hydrogen | high | gemini-4-neon |
+| engineer-mcp | sonnet | medium | opus | gemini-4-hydrogen | high | gemini-4-neon |
+| engineer-infra | sonnet | high | opus | gemini-4-hydrogen | high | gemini-4-neon |
+| content-writer | sonnet | medium | opus | gemini-4-hydrogen | high | gemini-4-neon |
+| graphics-builder | sonnet | medium | opus | gemini-4-hydrogen | medium | gemini-4-neon |
+| scribe | sonnet | low | haiku | gemini-4-hydrogen | medium | gemini-4-neon |
+| tester | sonnet | low | haiku | gemini-4-hydrogen | low | gemini-4-neon |
+| docs-scout | sonnet | low | haiku | gemini-4-hydrogen | low | gemini-4-neon |
+| design-auditor | sonnet | medium | opus | gemini-4-hydrogen | medium | gemini-4-neon |
+| design-import | haiku | low | sonnet | gemini-4-hydrogen | low | gemini-4-neon |
+| integrator | haiku | low | sonnet | gemini-4-hydrogen | low | gemini-4-neon |
 
-A project can override a row in its own `AGENTS.md` under `## Models`.
+| Tier | Claude | Gemini |
+| --- | --- | --- |
+| Deep planning, root cause | fable, high | gemini-4-carbon, high |
+| Judgement, writing | opus, high | gemini-4-neon, high |
+| Building | sonnet, medium | gemini-4-hydrogen, high |
+| Mechanical | haiku or sonnet, low | gemini-4-hydrogen, low |

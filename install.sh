@@ -18,17 +18,21 @@ fi
 if command -v gemini >/dev/null 2>&1; then
   rtk init --gemini --global --auto-patch
   gemini extensions install https://github.com/oliverassad/oa-claude --consent --auto-update
-  # Agent models: the Gemini column of MODELS.md into agents.overrides.
-  # Project AGENTS.md as a context file: https://geminicli.com/docs/cli/gemini-md/ (context.fileName).
+  # Agent models and thinking levels from MODELS.md; project AGENTS.md as a context file.
   python3 - "$HOME/.gemini/extensions/team/MODELS.md" <<'PY'
 import json, pathlib, sys
-rows = [l.split("|")[1:-1] for l in open(sys.argv[1]) if l.startswith("| ") and "---" not in l][1:]
+rows = [[c.strip() for c in l.split("|")[1:-1]] for l in open(sys.argv[1]) if l.startswith("| ") and "---" not in l]
+rows = [r for r in rows if len(r) == 7 and r[0] != "Agent"]
 path = pathlib.Path.home() / ".gemini" / "settings.json"
 settings = json.loads(path.read_text() or "{}") if path.exists() else {}
 settings.setdefault("context", {}).setdefault("fileName", ["AGENTS.md", "GEMINI.md"])
 overrides = settings.setdefault("agents", {}).setdefault("overrides", {})
-for agent, _, _, gemini in (map(str.strip, r) for r in rows):
-    overrides.setdefault(agent, {})["modelConfig"] = {"model": gemini}
+configs = settings.setdefault("modelConfigs", {}).setdefault("overrides", [])
+configs[:] = [c for c in configs if c.get("match", {}).get("overrideScope") not in {r[0] for r in rows}]
+for agent, _, _, _, model, thinking, _ in rows:
+    overrides.setdefault(agent, {})["modelConfig"] = {"model": model}
+    configs.append({"match": {"overrideScope": agent},
+                    "modelConfig": {"generateContentConfig": {"thinkingConfig": {"thinkingLevel": thinking}}}})
 path.write_text(json.dumps(settings, indent=2) + "\n")
 PY
 fi

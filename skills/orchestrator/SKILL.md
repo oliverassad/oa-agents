@@ -89,7 +89,7 @@ One ticket with one lane: skip the plan, the worktree and the integrator. The en
 ## Dispatch
 
 - Agent name: the project agent `<role>` if the project defines one, else `team:<role>`.
-- Model: pass the Claude column of `MODELS.md` (or the project `## Models` row) as `model`. On a model error, retry once with the fallback.
+- Model and effort: pass the `Claude` and `Claude effort` columns of `MODELS.md` (or the project `## Models` row) as `model` and `effort` on every dispatch. Without them the agent runs on this session's model. On a model error, retry once with the fallback.
 - Run independent agents in one message.
 - An agent sees only its own file, the team rules and your prompt. It never sees this chat. Give it every item of the `## Context` list in `<skill-dir>/../../agents/<role>.md` (`<skill-dir>`: the base directory shown when this skill loads).
 - For an engineer, use this template:
