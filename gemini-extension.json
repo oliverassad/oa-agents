@@ -1,6 +1,6 @@
 {
   "name": "team",
-  "version": "0.4.1",
-  "description": "Shared role rules and skills.",
-  "contextFileName": "GEMINI.md"
+  "version": "1.0.0",
+  "description": "Shared rules and skills for every project.",
+  "contextFileName": "AGENTS.md"
 }

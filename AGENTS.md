@@ -1,27 +1,35 @@
-# AGENTS.md: oa-claude
+# Team rules
 
-This repository holds the shared agents, skills and rules for every project of the operator. It is the source for the Claude Code plugin `team` and the Gemini CLI extension `team`. The repository is public: never put a secret, a token or a private path in it.
+Shared rules for every project and every agent. The project's own `AGENTS.md` wins on conflict.
 
-## Layout
+## Modes
 
-- `.agents/agents/<role>/agent.md`: one role, tool-neutral. Frontmatter: `name`, `description`, `access` (`write`, `read-only`, `no-write`), `rules` (rule files the role gets).
-- `skills/<name>/SKILL.md`: skills in the Agent Skills format, at the root so the Gemini extension finds them.
-- `.agents/rules/`: `core/` (every session and agent), `lang/` (per language), `area/` (per area: api, mcp, db, ui, testing, deps, infra, content).
-- `.agents/models.json`: the model map. `roles` (role to tier) and `tiers` (tier to model per tool). Every agent needs a role entry; the build fails otherwise.
-- `claude/`: Claude-only sources (plugin manifest, hooks).
-- `plugins/team/`, `gemini-extension.json`, `GEMINI.md`: generated. Never edit them by hand.
-- `install.sh`, `install/<cli>.sh`: the one-line installer and its per-CLI steps.
+- caveman and ponytail are installed and on. Every chat answer is caveman. Every code change is ponytail: shortest diff, YAGNI, reuse.
+- rtk rewrites shell commands. Call tools by name, never by absolute path.
+- Text that outlives the chat (code, comments, commits, tickets, docs) is plain ASD-STE100 English: short sentences, active voice, one word for one meaning.
 
-## Change a role, skill or rule
+## Services
 
-1. Edit the source under `.agents/`, `skills/` or `claude/`.
-2. Run `python3 -I scripts/build.py`.
-3. Run `python3 -I -m unittest discover -s scripts`.
-4. Bump `version` in `claude/manifest/plugin.json` whenever the outputs change, so installed copies update. CI (`scripts/version_guard.py`) fails otherwise.
-5. Commit sources and outputs together. CI fails when they drift.
+- Every outside service (Linear, GitHub, Notion, Slack, Gmail, Drive, Firecrawl) goes through Composio. Search with `COMPOSIO_SEARCH_TOOLS`, run with `COMPOSIO_MULTI_EXECUTE_TOOL`.
+- Never report a service unreachable before the Composio search.
 
-## Rules for this repo
+## Work
 
-- Shared files hold the method. Project facts (paths, commands, Linear board) belong in each project's `AGENTS.md` and `.agents/roles/<role>.md`.
-- Never put a secret, a token or a private path in this repo.
-- The team rules (`.agents/rules/core/`) apply to work here too.
+1. Ticket first. Every change starts from a Linear ticket or milestone. The team and project come from `## Tracker` in the project `AGENTS.md`. None: ask which board, then write it there.
+2. Branch per ticket or milestone. Never commit to `main`.
+3. Docs first. Read the official docs of a library before coding against it. Never code an API from memory.
+4. Failing test first. Never skip or disable a test to get green.
+5. Report what happened, with the failing output. Never wave a red check through.
+
+## Safety
+
+- Ask before anything outward-facing: push, pull request, merge, comment, Linear write, publish.
+- Never force-push, never rewrite published history, never print a secret.
+- Deleting a file, branch or table is a decision: confirm first.
+
+## Agents
+
+- The main session orchestrates (Skill `orchestrator`). Subagents cannot dispatch other agents.
+- A subagent reports; the main session decides and lands the change.
+- Report: verdict first, one line per finding with its path, 5 lines at most.
+- First read the project `AGENTS.md`. It holds the facts: stack, commands, paths, Tracker.

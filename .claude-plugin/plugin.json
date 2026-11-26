@@ -1,0 +1,11 @@
+{
+  "name": "team",
+  "version": "1.0.0",
+  "description": "Shared rules, agents and skills for every project.",
+  "author": { "name": "Oliver Assad" },
+  "repository": "https://github.com/oliverassad/oa-claude",
+  "hooks": {
+    "SessionStart": [{ "hooks": [{ "type": "command", "command": "cat \"${CLAUDE_PLUGIN_ROOT}/AGENTS.md\"" }] }],
+    "SubagentStart": [{ "hooks": [{ "type": "command", "command": "python3 -c 'import json,sys;print(json.dumps({\"hookSpecificOutput\":{\"hookEventName\":\"SubagentStart\",\"additionalContext\":open(sys.argv[1]).read()}}))' \"${CLAUDE_PLUGIN_ROOT}/AGENTS.md\"" }] }]
+  }
+}

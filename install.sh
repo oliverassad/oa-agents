@@ -1,14 +1,17 @@
 #!/bin/sh
-# Install the shared team for every agent CLI on this machine (Claude Code, Gemini CLI).
+# Bootstrap rtk and the team plugin (Claude Code) or extension (Gemini CLI).
 #   curl -fsSL https://raw.githubusercontent.com/oliverassad/oa-claude/main/install.sh | sh
-# One CLI only:  ... | sh -s -- claude     or     ... | sh -s -- gemini
-set -u
-RAW="${TEAM_RAW:-https://raw.githubusercontent.com/oliverassad/oa-claude/main/install}"
+# caveman and ponytail are installed separately (their own one-liners).
+curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/master/install.sh | sh
+export PATH="$HOME/.local/bin:$PATH"
 
-# rtk, the official way (latest release, checksum-verified by its installer).
-command -v rtk >/dev/null 2>&1 || curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/master/install.sh | sh
-PATH="$HOME/.local/bin:$PATH"; export PATH
+if command -v claude >/dev/null 2>&1; then
+  rtk init --global --auto-patch
+  claude plugin marketplace add oliverassad/oa-claude
+  claude plugin install team@oa-claude
+fi
 
-for cli in ${1:-claude gemini}; do
-  if command -v "$cli" >/dev/null 2>&1; then curl -fsSL "$RAW/$cli.sh" | sh; else echo "[team] $cli not found, skipped"; fi
-done
+if command -v gemini >/dev/null 2>&1; then
+  rtk init --gemini --global --auto-patch
+  gemini extensions install https://github.com/oliverassad/oa-claude --consent --auto-update
+fi

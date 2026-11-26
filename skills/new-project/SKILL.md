@@ -1,18 +1,29 @@
 ---
 name: new-project
-description: Sets up a repository to use the shared team - writes AGENTS.md, CLAUDE.md, .claude/settings.json (team, caveman, ponytail plugins, ultra modes) and .agents/roles/, then asks for the Linear board. Use when starting a new project or adopting the team in an existing one.
+description: Prepares a repository for the team - writes the project AGENTS.md with the facts agents need (Tracker, stack, commands, paths). Use when a project has no AGENTS.md.
 ---
 
 # New project
 
-Run in the root of the target repository. Templates are in the `templates/` folder beside this file (the base directory shown when this skill loads).
+1. Read what exists: `AGENTS.md`, `CLAUDE.md`, manifests, scripts, CI files. Never overwrite; add missing sections.
+2. Write `AGENTS.md` with these sections, filled from the repo:
 
-1. **Look first.** Read any existing `AGENTS.md`, `CLAUDE.md`, `.claude/settings.json`. Never overwrite: merge.
-2. **Settings.** Merge `templates/settings.json` into `.claude/settings.json`: add the marketplaces, the enabled plugins and the `env` keys that are missing. Keep every existing key.
-3. **AGENTS.md.** None: copy `templates/AGENTS.md` and fill what the repo shows (stack from manifests, commands from scripts, branches from `git`). Existing: add only the missing sections (`Tracker`, `Stack`, `Branches`, `Commands`, `Deploy`, `Area to suites`, `Roles`) and the First actions block.
-4. **CLAUDE.md.** None: write `@AGENTS.md`. Existing without that import: add it as the first line.
-5. **Roles.** Create `.agents/roles/README.md` from the template. Move stack facts from existing project agents into `.agents/roles/<role>.md` when the operator asks to adopt the shared agents.
-6. **Models (optional).** Only when the operator wants other models for this project: copy `templates/models.json` to `.agents/models.json` and keep only the overrides.
-7. **Tracker.** Ask the operator for the Linear team and project (list them through Composio). Write them into `## Tracker`.
-8. **Other tools (on request).** For Gemini, Codex or Cursor, copy the shared rules and skills into `.agents/team/` as a snapshot and link them from `AGENTS.md`. Say that the snapshot does not update by itself.
-9. **Report.** List the files written. Do not commit unless the operator asks.
+```markdown
+# <project>
+
+## Tracker
+Linear team <KEY>, project <name>.
+
+## Stack
+<languages, frameworks, data, hosting>
+
+## Commands
+Install: <cmd>. Check: <cmd>. Test: <cmd>. Deploy: <how>. Rollback: <how>.
+
+## Paths
+<area>: <path> - <owner agent>
+```
+
+3. Ask the operator for the Linear board (list teams and projects through Composio). Write it into `## Tracker`.
+4. If `CLAUDE.md` exists without it, add `@AGENTS.md` as its first line.
+5. List the files written. Do not commit unless asked.

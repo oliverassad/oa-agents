@@ -1,16 +1,6 @@
 {
   "name": "oa-claude",
-  "owner": {
-    "name": "Oliver Assad"
-  },
-  "metadata": {
-    "description": "Shared role agents, skills and rules for the operator's projects."
-  },
-  "plugins": [
-    {
-      "name": "team",
-      "source": "./plugins/team",
-      "description": "Shared role agents, skills and rules for every project."
-    }
-  ]
+  "owner": { "name": "Oliver Assad" },
+  "metadata": { "description": "Shared rules, agents and skills for every project." },
+  "plugins": [{ "name": "team", "source": "./", "description": "Shared rules, agents and skills for every project." }]
 }

@@ -1,7 +1,0 @@
-{
-  "about": "Project overrides of the shared team models. Delete the keys you do not need. roles: role to tier. tiers: tier to model. The shared defaults live in oa-claude .agents/models.json.",
-  "roles": {
-    "engineer-ui": "plan"
-  },
-  "tiers": {}
-}
