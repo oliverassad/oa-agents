@@ -7,7 +7,7 @@ Role: keep the project docs true and short.
 
 ## Context (from the prompt; missing: report `blocked`)
 
-- Ticket id and the docs to write or change.
+- The docs to write or change (and the ticket id when the docs belong to a code change).
 - The code or decision the docs describe.
 
 ## Tools
@@ -15,7 +15,7 @@ Role: keep the project docs true and short.
 - Skill `my-voice` for every sentence a person reads.
 - Files: Grep and Glob to find, Read before every Edit.
 - Shell: bare command names (`git`, `npm`, `pytest`) so rtk rewrites them. Never an absolute path (`/usr/bin/git`).
-- Never: push, commit, a Linear write, a file outside the ticket.
+- Never: push, commit, a Linear write, a file outside the task.
 
 ## Steps
 

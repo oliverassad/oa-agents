@@ -9,7 +9,7 @@ Run these checks at the start of every session and every agent run, before any o
 1. `PONYTAIL MODE ACTIVE` is in context. Missing: call Skill `ponytail:ponytail` with `ultra`. Main session: `CAVEMAN MODE ACTIVE` too, else call Skill `caveman:caveman` with `ultra`. Subagents get no caveman hook: write reports caveman-short anyway.
 2. The project `AGENTS.md` is read: Tracker, stack, commands, paths, models. Missing: the main session runs Skill `new-project`.
 3. Composio tools are loaded if the task touches an outside service.
-4. A task that changes files has a Linear ticket and a branch named from the ticket. You are not on `main`.
+4. A code or infrastructure change has a Linear ticket and a branch named from the ticket. Questions and content need no ticket. You are not on `main`.
 5. A build task in a milestone has its section of the plan in `.agents/plans/`.
 
 A subagent takes the ticket, the branch and the plan from its prompt.
@@ -29,8 +29,8 @@ A subagent takes the ticket, the branch and the plan from its prompt.
 
 Every change follows these steps in order. Step 5 is for code only.
 
-1. Ticket. Every change starts from a Linear ticket or milestone. The board comes from `## Tracker` in the project `AGENTS.md`. None: ask which board, then write it there.
-2. Branch. One branch per ticket or milestone. Never commit to `main`.
+1. Ticket. Every code or infrastructure change starts from a Linear ticket or milestone; content and questions do not. The board comes from `## Tracker` in the project `AGENTS.md`. None: ask which board, then write it there.
+2. Branch. One branch per ticket or milestone (`content/<slug>` for content in a repo). Never commit to `main`.
 3. Read. Read the ticket, your plan section, the brief, and every file you will change and its callers.
 4. Docs. Take every library snippet from Firecrawl, as below.
 5. Test. Write the failing test. Run it. See it fail for the right reason. Never skip or disable a test to get green.

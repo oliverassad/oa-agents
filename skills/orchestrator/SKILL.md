@@ -1,108 +1,90 @@
 ---
 name: orchestrator
-description: Standard workflow for any change - ticket in Linear first, plan, fan out the dedicated agents in parallel, review with /code-review, pull request, lessons. Use at the start of any ask that changes code, docs, content, figures or infrastructure.
+description: How the main session runs any task - first decide the kind of work (question, content, code change, failure), then run the matching short path with the dedicated agents. Tickets only for code and infrastructure changes. Use at the start of every task.
 ---
 
 # Orchestrator
 
-The main session runs this. It writes no product code, text or figures; agents do. It commits what the agents leave uncommitted (plans, briefs, docs, figures).
+The main session runs this. It decides, dispatches, checks reports and talks to the operator. Agents do the work.
 
-To resume a milestone, read the plan, the ticket states and `git worktree list` before any dispatch.
-
-## Workflow
-
-Diamonds marked OPERATOR stop and wait for the operator's answer.
+## 1. Fork first
 
 ```mermaid
 flowchart TD
-  A[Ask] --> B{Linear ticket exists?}
-  B -- no --> C[ticket-writer drafts]
-  C --> D{OPERATOR: approve scope?}
-  D -- no --> C
-  D -- yes --> E[Create ticket via Composio]
-  B -- yes --> F{Kind of work?}
-  E --> F
-  F -- code --> G[Branch, then docs-scout per ticket]
-  G --> H[architect: plan]
-  H --> I[engineers in parallel, one worktree per lane]
-  I --> J[integrator merges lanes]
-  J --> K[tester runs slow suites]
-  K -- real red --> I
-  K -- green --> L["/code-review, plus /security-review on risky diffs"]
-  L -- findings --> I
-  L -- clean --> M{OPERATOR: push and open PR?}
-  M -- yes --> N[PR open, tickets In Review]
-  N --> O{OPERATOR merges}
-  O --> P{Deploy green?}
-  P -- no --> Q[debugger finds cause; revert first if production broke]
-  Q --> C
-  P -- yes --> R[Tickets Done; traps seen twice into AGENTS.md]
-  F -- content --> S[Branch, then content-writer]
-  S --> T[graphics-architect brief, then graphics-builder]
-  S --> U[editor checks my-voice]
-  T --> V{OPERATOR: review and publish}
-  U --> V
-  F -- unclear failure --> Q
+  A[Ask] --> B{Kind of work?}
+  B -- question --> Q[Answer. docs-scout if a library is involved]
+  B -- content --> C[content-writer]
+  C --> C2[graphics-architect, then graphics-builder, per figure]
+  C --> C3[editor]
+  C2 --> C4{OPERATOR: review}
+  C3 --> C4
+  B -- code or infra --> T{Ticket exists?}
+  T -- no --> T2[ticket-writer drafts] --> T3{OPERATOR: approve}
+  T3 --> P
+  T -- yes --> P{One ticket?}
+  P -- yes --> E[One engineer on the ticket branch]
+  P -- milestone --> M[architect plans, engineers in parallel, integrator merges]
+  E --> R[tester, then /code-review]
+  M --> R
+  R -- findings --> E
+  R -- clean --> PR{OPERATOR: push and PR?}
+  B -- failure --> D[debugger finds the cause] --> T
 ```
 
-## Who to ask when
+| Kind | Ticket | Branch | Path |
+| --- | --- | --- | --- |
+| Question | no | no | Answer. Facts about a library: `docs-scout` |
+| Content (article, guide, figure, slides) | no | only if it lands in a repo: `content/<slug>` | Section 3 |
+| Code or infrastructure | yes | from the ticket | Section 2 |
+| Failure with no clear cause | after the cause is found | no | `debugger`, then section 2 |
 
-| Situation | Ask |
-| --- | --- |
-| Scope, priority, which Linear board | Operator |
-| Push, pull request, merge, Linear write, publish, delete | Operator (always ask first) |
-| New dependency, model change, design trade-off | Operator, with a recommendation |
-| How a library or API works today | `docs-scout` (Firecrawl) |
-| What to build and in which order | `architect` |
-| Why something fails and the cause is unclear | `debugger` |
-| Is the merged branch working | `tester` |
-| Does the code have bugs | `/code-review` |
-| Is the change safe (auth, secrets, input, infrastructure) | `/security-review` |
-| Does the text read right | `editor` |
-| What a figure should say | `graphics-architect` |
-| A subagent reports `blocked` | Give the missing item and dispatch again, or ask the operator |
+## 2. Code or infrastructure
 
-## Code
+1. **Ticket.** Find it in Linear. None: `ticket-writer` drafts, the operator approves, create it through Composio.
+2. **Docs.** `docs-scout` for each ticket that touches an external library.
+3. **Build.**
+   - One ticket: one engineer on the ticket branch.
+   - Milestone: `architect` writes `.agents/plans/<milestone>.md`. Then one engineer per ticket in parallel, each in its own worktree (`git worktree add .worktrees/<lane> -b <lane> <milestone branch>`). `integrator` merges the lanes.
+   - Pick the engineer by area: `engineer-ui`, `engineer-api`, `engineer-db`, `engineer-mcp`, `engineer-infra`, else `engineer`.
+4. **Check.** `tester` runs the slow suites. Then `/code-review` (add `/security-review` for auth, secrets, input or infrastructure). Findings go back to the engineer.
+5. **Pull request.** Ask the operator. One yes covers push, pull request and moving the tickets to In Review.
+6. **After merge.** Deploy red: `debugger`, revert first if production broke. Green: tickets Done. Move each trap seen twice into the project `AGENTS.md`.
 
-1. Ticket. Find the Linear ticket or milestone. None: `ticket-writer` drafts it, the operator approves, create it through Composio.
-2. Branch. Create the ticket or milestone branch from `main`, named from the ticket.
-3. Docs. One `docs-scout` per ticket that touches an external library, in parallel.
-4. Plan. `architect` once per milestone: `.agents/plans/<milestone>.md`. Commit the plan and the briefs.
-5. Build. Blocking tickets first. Then one engineer per ticket in parallel, one worktree per lane (`git worktree add .worktrees/<lane> -b <lane> <milestone branch>`; `.worktrees/` is in `.gitignore`). Pick the engineer by area: `engineer-ui`, `engineer-api`, `engineer-db`, `engineer-mcp`, `engineer-infra`, else `engineer`.
-6. Merge. `integrator` merges the lanes. Then remove each worktree (`git worktree remove .worktrees/<lane>`).
-7. Test. `tester` runs the slow suites on the merged branch.
-8. Review. Run `/code-review` on the branch. Run `/security-review` too when the diff touches auth, secrets, input handling or infrastructure. Send each finding to its engineer, on the milestone branch. Review the fixes again.
-9. Pull request. Ask the operator. One yes covers the push, one pull request and the move of the tickets to In Review.
-10. After merge. Check the deploy run. Red: `debugger` finds the cause, revert first if production is broken, open a fix ticket. Green: tickets go Done; offer to delete the merged lane branches.
-11. Lessons. Move each trap that happened twice into the project `AGENTS.md`.
-
-One ticket with one lane: skip the plan, the worktree and the integrator. The engineer works on the ticket branch.
-
-## Content and figures
+## 3. Content
 
 1. `content-writer` writes `<topic>.md`.
-2. In parallel, per figure: `graphics-architect` writes the brief, then `graphics-builder` builds it.
+2. Per figure, in parallel: `graphics-architect` writes the brief, `graphics-builder` builds it.
 3. `editor` checks the text against `my-voice`.
-4. `design-auditor` only when the operator asks. `design-import` when prints arrive.
-5. Docs in the repo: `scribe`.
+4. The operator reviews and publishes. `design-auditor` only on request. Repo docs: `scribe`.
+
+## Who to ask
+
+| Need | Ask |
+| --- | --- |
+| Scope, priority, Linear board, publish, push, merge, delete, new dependency | Operator |
+| How a library works today | `docs-scout` |
+| What to build, in which order | `architect` |
+| Why it fails | `debugger` |
+| Does it work, is it safe | `tester`, `/code-review`, `/security-review` |
+| Does the text read right | `editor` |
+| What a figure says | `graphics-architect` |
 
 ## Dispatch
 
-- Agent name: the project agent `<role>` if the project defines one, else `team:<role>`.
-- Model and effort: pass the `Claude` and `Claude effort` columns of `MODELS.md` (or the project `## Models` row) as `model` and `effort` on every dispatch. Without them the agent runs on this session's model. On a model error, retry once with the fallback.
-- Run independent agents in one message.
-- An agent sees only its own file, the team rules and your prompt. It never sees this chat. Give it every item of the `## Context` list in `<skill-dir>/../../agents/<role>.md` (`<skill-dir>`: the base directory shown when this skill loads).
-- For an engineer, use this template:
+- Name: the project agent `<role>` if the project has one, else `team:<role>`.
+- Pass `model` and `effort` from `MODELS.md` on every dispatch. On a model error, retry once with the fallback.
+- An agent sees only its file, the team rules and your prompt. Give it every item in the `## Context` list of its agent file. For an engineer:
 
 ```
 TICKET: <id> - <title>
 DESCRIPTION: <current state, what to build, files it owns, traps>
 DEFINITION OF DONE:
 - [ ] <line>
-BRANCH: <branch, and the worktree path of the lane>
+BRANCH: <branch, or worktree path>
 PLAN: .agents/plans/<milestone>.md, section <ticket id> | none
 BRIEF: .agents/briefs/<ticket>.md | none
-COMMANDS: <install, test and check commands for this area>
+COMMANDS: <install, test, check>
 ```
 
-- Check each report against the agent's Definition of Done before it reaches a ticket or a commit. A missing box is not done: send it back with the gap.
+- Run independent agents in one message. Check each report against its Definition of Done; a missing box goes back.
+- To resume, read the plan, the ticket states and `git worktree list` first.
