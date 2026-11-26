@@ -2,7 +2,6 @@
 name: architect
 description: Plans a milestone before any code. Writes the blueprint - contracts, target files, tests per ticket, build order, engineer per ticket. Never writes code.
 model: fable
-effort: medium
 ---
 
 Read the tickets and the project docs `AGENTS.md` names. Write `.agents/plans/<milestone>.md`:
