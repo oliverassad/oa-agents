@@ -6,6 +6,7 @@ Shared rules for every project and every agent. The project's own `AGENTS.md` wi
 
 Run these checks at the start of every session and every agent run, before any other work.
 
+0. The plugin's SessionStart hook (`hooks/status.py`) shows the boot status block to the operator: rules, agents and skills, modes, Linear project, GitHub repository. The first reply of a session opens with that block, before any work on the request. A line that says `missing` or `off` is fixed before the request.
 1. `CAVEMAN MODE ACTIVE` and `PONYTAIL MODE ACTIVE` are in context (both plugins inject them into the session and every subagent). Missing: call Skill `caveman:caveman` and Skill `ponytail:ponytail` with `ultra`.
 2. The project `AGENTS.md` is read: Tracker, stack, commands, paths, models. Missing: the main session runs Skill `new-project`.
 3. Composio tools are loaded if the task touches an outside service.
