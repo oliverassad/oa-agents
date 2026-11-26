@@ -26,16 +26,16 @@ PLUGINS=(caveman@caveman ponytail@ponytail team@oa-claude)
 
 install_rtk() {
   # Official way (github.com/rtk-ai/rtk): the installer takes the latest release, checks
-  # its SHA-256 against checksums.txt and refuses unsafe archive paths. Then `rtk init -g`
+  # its SHA-256 against checksums.txt and refuses unsafe archive paths. Then `rtk init --global`
   # adds the Claude Code hook to the user settings (--auto-patch: no prompt).
   if ! command -v rtk >/dev/null 2>&1; then
-    curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh \
+    curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/master/install.sh | sh \
       || { log "rtk install failed"; return; }
     # Sessions may not have ~/.local/bin on PATH; a link in /usr/local/bin covers that.
     ln -sf "$HOME/.local/bin/rtk" /usr/local/bin/rtk 2>/dev/null || export PATH="$HOME/.local/bin:$PATH"
   fi
   log "rtk: $(rtk --version 2>&1)"
-  rtk init -g --auto-patch || log "rtk init failed"
+  rtk init --global --auto-patch || log "rtk init failed"
 }
 
 write_user_settings() {
