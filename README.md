@@ -8,7 +8,7 @@ Shared agents, skills and rules for every project, from one source:
 
 ## What you get
 
-- 18 role agents (`team:architect`, `team:engineer-ui`, `team:tester`, ...). See the roster in `.agents/skills/agent-orchestrator/SKILL.md`.
+- 18 role agents (`team:architect`, `team:engineer-ui`, `team:tester`, ...). See the roster in `skills/agent-orchestrator/SKILL.md`.
 - Skills: `agent-orchestrator` (the standard workflow), `deploy-triage` (red deploys), `health-check` (weekly, schedulable), `bootstrap-project` (new project as milestone M0), `my-voice`, `svg-figures`, `new-project`.
 - Rules by category: `core/` for everyone, `lang/` (TypeScript, Svelte, Python), `area/` (API, MCP, database, UI, testing, dependencies, infrastructure, content).
 - Hooks: core rules at session start; role and language rules at each subagent start; rtk rewrite and an absolute-path guard.
