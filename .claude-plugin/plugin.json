@@ -1,11 +1,11 @@
 {
   "name": "team",
-  "version": "1.9.0",
+  "version": "1.10.0",
   "description": "Shared rules, agents and skills for every project.",
   "author": {
     "name": "Oliver Assad"
   },
-  "repository": "https://github.com/oliverassad/oa-claude",
+  "repository": "https://github.com/oliverassad/oa-agents",
   "hooks": {
     "SessionStart": [
       {

@@ -1,6 +1,6 @@
-# oa-claude
+# oa-agents
 
-Shared rules, agents and skills for every project. One repository is both a Claude Code plugin (`team@oa-claude`) and a Gemini CLI extension (`team`).
+Shared rules, agents and skills for every project. One repository is both a Claude Code plugin (`team@oa-agents`) and a Gemini CLI extension (`team`).
 
 | Path | What | Claude | Gemini |
 | --- | --- | --- | --- |
@@ -16,7 +16,7 @@ This repository does not install three things that the team needs: the caveman p
 Local machine or cloud environment setup script:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/oliverassad/oa-claude/main/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/oliverassad/oa-agents/main/install.sh | sh
 ```
 
 It installs rtk, then the team plugin for Claude Code and the extension for Gemini CLI, whichever is present. For Gemini CLI it also adds `AGENTS.md` to `context.fileName`, so Gemini loads the project `AGENTS.md`. Run it again to update.
@@ -26,12 +26,12 @@ It installs rtk, then the team plugin for Claude Code and the extension for Gemi
 To install only the plugin from inside Claude Code:
 
 ```
-/plugin install team --marketplace oliverassad/oa-claude
+/plugin install team --marketplace oliverassad/oa-agents
 ```
 
 ## Boot status
 
-At the start of each session, `hooks/status.py` shows a five-line status: rules, agents and skills, modes (caveman, ponytail, rtk), the Linear project from `## Tracker` in the project `AGENTS.md`, and the GitHub repository. Test: `python3 hooks/test_status.py`.
+At the start of each session, `hooks/status.py` shows a six-line status: rules, agents and skills, MCP (servers in the config files, and the Composio check), modes (caveman, ponytail, rtk), the Linear project (`## Tracker` in the project `AGENTS.md`, else the repository name) and the GitHub repository. The hook runs while the other plugins still start. The agent fixes each `off` or `missing` line, checks Composio, runs `python3 hooks/status.py --text` again and opens its first reply with that block, every line green. Test: `python3 hooks/test_status.py`.
 
 ## Change
 
