@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Generate the tool-specific outputs from the neutral sources in `.agents/`.
 
-Sources: .agents/agents/<role>/agent.md, .agents/skills/, .agents/rules/, .agents/models.json,
+Sources: .agents/agents/<role>/agent.md, skills/, .agents/rules/, .agents/models.json,
 claude/hooks/. Outputs: plugins/team/ (Claude Code plugin), and gemini-extension.json plus
 GEMINI.md at the repo root (Gemini CLI extension). The outputs are committed, because a plugin install copies only the plugin folder.
 
@@ -47,7 +47,7 @@ def build_claude(out: Path, agents: list, models: dict) -> None:
     (plugin / "agents").mkdir(parents=True)
     for meta, body in agents:
         (plugin / "agents" / f"{meta['name']}.md").write_text(claude_agent(meta, body, models), encoding="utf-8")
-    shutil.copytree(SRC / "skills", plugin / "skills")
+    shutil.copytree(ROOT / "skills", plugin / "skills")
     shutil.copytree(SRC / "rules", plugin / "rules")
     roles = {meta["name"]: meta["rules"] for meta, _ in agents}
     (plugin / "rules" / "roles.json").write_text(json.dumps(roles, indent=2) + "\n", encoding="utf-8")
@@ -58,7 +58,7 @@ def build_claude(out: Path, agents: list, models: dict) -> None:
 
 def build_gemini(out: Path, version: str) -> None:
     # The repo root is the Gemini extension (`gemini extensions install <repo-url>`):
-    # manifest and context file at the root, skills through the root `skills` link.
+    # manifest, context file and skills/ at the root.
     manifest = {"name": "team", "version": version, "description": "Shared role rules and skills.",
                 "contextFileName": "GEMINI.md"}
     (out / "gemini-extension.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
