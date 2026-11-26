@@ -6,7 +6,7 @@ Shared rules for every project and every agent. The project's own `AGENTS.md` wi
 
 Run these checks at the start of every session and every agent run, before any other work.
 
-1. `PONYTAIL MODE ACTIVE` is in context. Missing: call Skill `ponytail:ponytail` with `ultra`. Main session: `CAVEMAN MODE ACTIVE` too, else call Skill `caveman:caveman` with `ultra`. Subagents get no caveman hook: write reports caveman-short anyway.
+1. `CAVEMAN MODE ACTIVE` and `PONYTAIL MODE ACTIVE` are in context (both plugins inject them into the session and every subagent). Missing: call Skill `caveman:caveman` and Skill `ponytail:ponytail` with `ultra`.
 2. The project `AGENTS.md` is read: Tracker, stack, commands, paths, models. Missing: the main session runs Skill `new-project`.
 3. Composio tools are loaded if the task touches an outside service.
 4. A code or infrastructure change has a Linear ticket and a branch named from the ticket. Questions and content need no ticket. You are not on `main`.
