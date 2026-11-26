@@ -31,4 +31,4 @@ To install only the plugin from inside Claude Code:
 
 Agent files carry no `model` (Gemini refuses Claude names); `MODELS.md` holds the map.
 
-Edit the files, bump `version` in `.claude-plugin/plugin.json` and `gemini-extension.json`, push, tag `v<version>`.
+Edit the files, bump `version` in `.claude-plugin/plugin.json` and `gemini-extension.json`, push, then publish a GitHub release `v<version>` (`gh release create v<version>`). Gemini installs and updates from the latest release, not from `main`.
