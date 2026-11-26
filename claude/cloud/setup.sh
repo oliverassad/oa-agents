@@ -3,7 +3,7 @@
 # Paste ALL of it into the environment's setup script on claude.ai (Code > Environments).
 #
 # It makes every cloud session in this environment start like a local one:
-#   1. rtk 1.2.1 (pinned, checksum-verified) in ~/.local/bin
+#   1. rtk, latest release, installed and hooked into Claude Code the official way
 #   2. plugins caveman, ponytail and team (private oliverassad/oa-claude) at user scope
 #   3. caveman and ponytail at level ultra (env in ~/.claude/settings.json)
 #
@@ -21,31 +21,21 @@ exec > >(tee -a "$LOG") 2>&1
 log() { echo "[oa-team setup] $*"; }
 log "start $(date -u +%FT%TZ) user=$(id -un) HOME=$HOME SKIP_PLUGIN_MARKETPLACE=${SKIP_PLUGIN_MARKETPLACE:-unset}"
 
-RTK_VERSION="1.2.1"
-declare -A RTK_SHA256=(
-  [x86_64]="75f64525711be935657a6b228d929c24bd9d1ab7d640ea374a8b913e5b5bac05"
-  [aarch64]="cae1a911eda9e898dbb90039436e9d53922b20afb1e3e4ae341f749eb62b7781"
-)
 MARKETPLACES=(JuliusBrussee/caveman DietrichGebert/ponytail oliverassad/oa-claude)
 PLUGINS=(caveman@caveman ponytail@ponytail team@oa-claude)
 
 install_rtk() {
-  if command -v rtk >/dev/null 2>&1; then log "rtk present: $(rtk --version)"; return; fi
-  local arch sha asset tmp
-  arch="$(uname -m)"
-  sha="${RTK_SHA256[$arch]:-}"
-  [ -n "$sha" ] || { log "no pinned rtk build for $arch"; return; }
-  asset="rtk-${arch}-unknown-linux-musl.tar.gz"
-  tmp="$(mktemp -d)"
-  curl -fsSL -o "$tmp/$asset" "https://github.com/rtk-ai/rtk/releases/download/v${RTK_VERSION}/${asset}" \
-    || { log "rtk download failed"; return; }
-  echo "$sha  $tmp/$asset" | sha256sum -c --status || { log "rtk checksum mismatch; not installed"; return; }
-  mkdir -p "$HOME/.local/bin"
-  tar -xzf "$tmp/$asset" -C "$tmp" && install -m 0755 "$(find "$tmp" -type f -name rtk | head -1)" "$HOME/.local/bin/rtk" \
-    && log "rtk installed: $("$HOME/.local/bin/rtk" --version)" || log "rtk install failed"
-  # Sessions may not have ~/.local/bin on PATH; a link in /usr/local/bin covers that.
-  ln -sf "$HOME/.local/bin/rtk" /usr/local/bin/rtk 2>/dev/null || true
-  rm -rf "$tmp"
+  # Official way (github.com/rtk-ai/rtk): the installer takes the latest release, checks
+  # its SHA-256 against checksums.txt and refuses unsafe archive paths. Then `rtk init -g`
+  # adds the Claude Code hook to the user settings (--auto-patch: no prompt).
+  if ! command -v rtk >/dev/null 2>&1; then
+    curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh \
+      || { log "rtk install failed"; return; }
+    # Sessions may not have ~/.local/bin on PATH; a link in /usr/local/bin covers that.
+    ln -sf "$HOME/.local/bin/rtk" /usr/local/bin/rtk 2>/dev/null || export PATH="$HOME/.local/bin:$PATH"
+  fi
+  log "rtk: $(rtk --version 2>&1)"
+  rtk init -g --auto-patch || log "rtk init failed"
 }
 
 write_user_settings() {
