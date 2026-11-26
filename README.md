@@ -21,6 +21,8 @@ curl -fsSL https://raw.githubusercontent.com/oliverassad/oa-claude/main/install.
 
 It installs rtk, then the team plugin for Claude Code and the extension for Gemini CLI, whichever is present. For Gemini CLI it also adds `AGENTS.md` to `context.fileName`, so Gemini loads the project `AGENTS.md`. Run it again to update.
 
+> **Antigravity / Gemini cloud only:** [`cloud-setup.sh`](cloud-setup.sh) and [`.agents/environment.json`](.agents/environment.json) are exclusively for Antigravity / Gemini cloud VMs (which do not run Claude Code plugins or hooks). Do not run them automatically for Claude Code or other agents.
+
 To install only the plugin from inside Claude Code:
 
 ```
