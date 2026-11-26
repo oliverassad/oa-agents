@@ -30,7 +30,7 @@ A subagent takes the ticket, the branch and the plan from its prompt.
 
 Every change follows these steps in order. Step 5 is for code only.
 
-1. Ticket. Every code or infrastructure change starts from a Linear ticket or milestone; content and questions do not. The board comes from `## Tracker` in the project `AGENTS.md`. None: ask which board, then write it there.
+1. Ticket. Every code or infrastructure change starts from a Linear ticket or milestone; content and questions do not. The board comes from `## Tracker` in the project `AGENTS.md`. None: ask which board, then write it there. Each GitHub repository has its own Linear project with the same name as the repository (`oliverassad/oa-claude` is project `oa-claude`). A ticket goes in the project of the repository it changes. A repository with no project: create the project first, named like the repository, with the description `GitHub: <owner>/<repo>`.
 2. Branch. One branch per ticket or milestone (`content/<slug>` for content in a repo). Never commit to `main`.
 3. Read. Read the ticket, your plan section, the briefs, and every file you will change and its callers.
 4. Docs. Take every library snippet from Firecrawl, as below.
