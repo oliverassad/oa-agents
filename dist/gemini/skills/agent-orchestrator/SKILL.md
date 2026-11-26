@@ -63,7 +63,12 @@ Fix the branch name (GIT BW-2 or BW-3) and each lane name `<type>/<TICKET>-slug`
 
 ## 9. Audit
 
-`auditor` runs once per milestone, read-only: nine angles, then the gate. Findings go back to the owning engineer; re-audit only the fixed angles.
+The orchestrator runs Skill `code-review` once per milestone, at level `high`, on the milestone branch against `origin/<integration>`. Use `max` or `ultra` only when the operator asks.
+
+1. Each finding goes back to the owning engineer as one line (`path:line: severity: problem. fix.`). The orchestrator decides which findings to act on; a review is evidence, not authority.
+2. After the fixes, run `code-review` again on the fix commits only.
+3. Then run the project gate command. It must exit 0.
+4. A ticket with a print: ask the operator whether to run `design-auditor` on its screens or figures.
 
 ## 10. Pull request (operator gate)
 
@@ -102,7 +107,7 @@ Check the deploy and journey runs of the merge commit (`gh run list`, `gh run vi
 | `engineer`, `engineer-ui`, `engineer-api`, `engineer-db`, `engineer-mcp`, `engineer-infra` | one ticket, TDD | write |
 | `integrator` | merges lanes | write |
 | `tester` | area rows, journeys, triage | spec fixes |
-| `auditor` | nine-angle review | read-only |
+| Skill `code-review` | milestone review (main session) | read-only |
 | `scribe` | docs, ADRs | write |
 | `design-import` | design prints into the repo | write |
 | `content-writer` | `<topic>.md` | write |

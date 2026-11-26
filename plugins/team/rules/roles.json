@@ -7,18 +7,6 @@
     "area/deps",
     "area/infra"
   ],
-  "auditor": [
-    "lang/typescript",
-    "lang/svelte",
-    "lang/python",
-    "area/api",
-    "area/mcp",
-    "area/db",
-    "area/ui",
-    "area/testing",
-    "area/deps",
-    "area/infra"
-  ],
   "content-writer": [
     "area/content"
   ],

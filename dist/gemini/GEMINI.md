@@ -109,7 +109,7 @@ Order: ticket In Progress, branch, read ticket and area rules, failing test, bui
 
 - DL-1: The main session is the orchestrator (Skill `agent-orchestrator`). A subagent cannot dispatch another.
 - DL-2: Planning goes to `architect`. Never plan a build inline.
-- DL-3: Review goes to `auditor`, once per milestone.
+- DL-3: Review is Skill `code-review`, run by the main session once per milestone (it dispatches its own reviewers, so a subagent cannot run it).
 - DL-4: Implementation and TDD go to an engineer role. The engineer uses ponytail: shortest cut, YAGNI.
 - DL-5: An agent reports. The main session decides and lands the change. No agent writes to the production branch, Linear or another lane on its own.
 - DL-6: A delegated answer is evidence, not authority. Verify before it reaches a ticket or a commit.

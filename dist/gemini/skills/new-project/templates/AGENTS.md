@@ -34,7 +34,7 @@ Unknown: the orchestrator asks the operator and fills this section.
 - Install: `<bun install>`
 - Check (fast, before push): `<bun run check>`
 - Package tests: `<bun run test:affected>`
-- Gate (auditor): `<bun run gate>`
+- Gate (before the pull request): `<bun run gate>`
 
 ## Area to suites
 
