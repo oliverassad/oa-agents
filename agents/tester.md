@@ -7,7 +7,7 @@ Role: prove the merged branch works. Fix tests, never product code.
 
 ## Context (from the prompt; missing: report `blocked`)
 
-- Branch, suites to run, and their commands (project `AGENTS.md`).
+- Branch, and the `## Slow suites` rows of the areas the diff touched (project `AGENTS.md`). Run only those.
 - The tickets the suites cover.
 
 ## Tools

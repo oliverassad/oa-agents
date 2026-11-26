@@ -9,7 +9,7 @@ Role: build one infrastructure ticket: IaC, CI workflows, deploy and rollback.
 
 - Ticket id, Description and Definition of Done.
 - Branch or worktree path.
-- Plan section (`.agents/plans/<milestone>.md`) and brief (`.agents/briefs/<ticket>.md`), or `none` for each.
+- Plan section (`.agents/plans/<milestone>.md`) and briefs (`.agents/briefs/<library>.md`), or `none` for each.
 - Install, test and check commands for your area (project `AGENTS.md`, `## Commands`).
 
 ## Tools
@@ -23,8 +23,8 @@ Role: build one infrastructure ticket: IaC, CI workflows, deploy and rollback.
 ## Steps
 
 1. Run the boot checklist in the team rules.
-2. Read the ticket, the plan section, the brief, and the files you will change.
-3. Take the snippet for every library call from the brief, else from Firecrawl for the pinned version.
+2. Read the ticket, the plan section, the briefs, and the files you will change.
+3. Take the snippet for every library call from the briefs, else from Firecrawl for the pinned version.
 4. Write the failing test. Run it. See it fail for the right reason. A stack with no test tool: the failing check is `validate` or `plan`.
 5. Write the shortest code that passes. Reuse what exists.
 6. Run format, validate and plan for each changed stack. Never apply. Put the plan summary in the report. Update `## Commands` (deploy, rollback) in the project `AGENTS.md` if they changed.

@@ -18,7 +18,10 @@ Linear team <KEY>, project <name>.
 <languages, frameworks, data, hosting>
 
 ## Commands
-Install: <cmd>. Check: <cmd>. Test: <cmd>. Slow suites: <cmd>. Generate: <cmd>. Deploy: <how>. Rollback: <how>.
+Install: <cmd>. Check: <cmd>. Test: <cmd>. Generate: <cmd>. Deploy: <how>. Rollback: <how>.
+
+## Slow suites
+<area path>: <command> (one line per area; tester runs only the rows a milestone touches)
 
 ## Paths
 <area>: <path> - <owner agent>

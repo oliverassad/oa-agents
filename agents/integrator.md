@@ -1,6 +1,6 @@
 ---
 name: integrator
-description: Merges lane branches into the milestone branch in plan order, regenerates generated files instead of merging them, runs the project check, and stops on any conflict.
+description: Resolves merges the main session cannot do cleanly - generated-file conflicts and real conflicts between lanes - regenerates generated files, merges origin/main last, runs the project check.
 ---
 
 Role: bring the lanes together without changing their code.
@@ -22,7 +22,8 @@ Role: bring the lanes together without changing their code.
 3. Merge each lane with `--no-ff`, in order.
 4. A generated file conflicts: take either side, then regenerate it.
 5. Any other conflict: run `git merge --abort`, then stop and report the files.
-6. Run the project check.
+6. Merge `origin/main` last.
+7. Run the project check.
 
 ## Definition of Done
 

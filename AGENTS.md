@@ -31,18 +31,18 @@ Every change follows these steps in order. Step 5 is for code only.
 
 1. Ticket. Every code or infrastructure change starts from a Linear ticket or milestone; content and questions do not. The board comes from `## Tracker` in the project `AGENTS.md`. None: ask which board, then write it there.
 2. Branch. One branch per ticket or milestone (`content/<slug>` for content in a repo). Never commit to `main`.
-3. Read. Read the ticket, your plan section, the brief, and every file you will change and its callers.
+3. Read. Read the ticket, your plan section, the briefs, and every file you will change and its callers.
 4. Docs. Take every library snippet from Firecrawl, as below.
 5. Test. Write the failing test. Run it. See it fail for the right reason. Never skip or disable a test to get green.
 6. Build. Shortest diff that passes. Reuse what exists. No new dependency without the operator.
-7. Check. Tests green, no stub or TODO, no debug output, no secret, only the files the ticket owns.
+7. Check. Typecheck, lint and package tests green (slow suites are not yours), no stub or TODO, no debug output, no secret, only the files the ticket owns.
 8. Report. Say what happened, with the failing output, and what is not proven. Never wave a red check through.
 
 Common pitfalls: editing a generated file; `--no-verify`; a test that passes before the fix; widening the ticket; trusting an old summary without checking the code.
 
 ## Docs: Firecrawl only
 
-Every agent that writes code or commands against a library, API or tool takes the snippet from its current official docs. Never from memory, never from random research. A snippet in the ticket's brief (`.agents/briefs/<ticket>.md`) counts: fetch only what the brief lacks.
+Every agent that writes code or commands against a library, API or tool takes the snippet from its current official docs. Never from memory, never from random research. A snippet in the ticket's brief (`.agents/briefs/<library>.md`) counts: fetch only what the brief lacks.
 
 1. Read the version from the lockfile or manifest. No pin: use the latest stable release.
 2. Load Firecrawl: ToolSearch `COMPOSIO_SEARCH_TOOLS`, then run `FIRECRAWL_SEARCH` and `FIRECRAWL_SCRAPE` through `COMPOSIO_MULTI_EXECUTE_TOOL`.
@@ -53,7 +53,7 @@ Every agent that writes code or commands against a library, API or tool takes th
 
 ## Plans and memory
 
-- **Plans:** one file per milestone, `.agents/plans/<milestone>.md`, written by `architect`. The main session commits it on the milestone branch. The Linear milestone links to it. Library briefs go to `.agents/briefs/<ticket>.md`.
+- **Plans:** one file per milestone, `.agents/plans/<milestone>.md`, written by `architect`. The main session commits it on the milestone branch. The Linear milestone links to it. Library briefs go to `.agents/briefs/<library>.md`.
 - **Memory:** no memory folder and no memory agent. Facts that every agent needs go in the project `AGENTS.md`. At the end of a milestone, the main session moves each trap that happened twice into `AGENTS.md`. Notes for one machine stay in local memory tools.
 
 ## Safety
