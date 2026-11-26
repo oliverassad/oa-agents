@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-# Idempotent cloud environment setup for Antigravity / agent containers.
+# Antigravity / Gemini cloud environment setup ONLY.
+# Do NOT use automatically for Claude Code or other agents — Claude Code uses
+# install.sh and native marketplace plugins (hooks, subagents, MCP) instead.
 # Installs rtk and links skills from oa-claude, caveman, and ponytail into ~/.agents/skills.
 set -euo pipefail
 
