@@ -3,7 +3,7 @@
 Shared agents, skills and rules for every project, from one source:
 
 - Claude Code: plugin `team` in marketplace `oa-claude`.
-- Gemini CLI: extension in `dist/gemini/` (rules as context, skills).
+- Gemini CLI: this repo root is the extension (`gemini-extension.json`, `GEMINI.md`, `skills/`).
 - Any tool that reads `AGENTS.md`: snapshot of the rules and skills (Skill `new-project`, step 7).
 
 ## What you get
@@ -15,26 +15,17 @@ Shared agents, skills and rules for every project, from one source:
 
 ## Install
 
-One step (Claude Code 2.1.275 or later):
+One line, for every agent CLI on the machine (Claude Code, Gemini CLI). It installs rtk the official way, the caveman and ponytail plugins or extensions, this team, and sets both modes to ultra:
 
 ```bash
-/plugin install team --marketplace oliverassad/oa-claude
+curl -fsSL https://raw.githubusercontent.com/oliverassad/oa-claude/main/install.sh | sh
 ```
 
-On one machine, for every project: add this to `~/.claude/settings.json`.
+One CLI only: append `-s -- claude` or `-s -- gemini` after `sh`. The per-CLI steps are in `install/claude.sh` and `install/gemini.sh`.
 
-```json
-{
-  "extraKnownMarketplaces": {
-    "oa-claude": { "source": { "source": "github", "repo": "oliverassad/oa-claude" } }
-  },
-  "enabledPlugins": { "team@oa-claude": true }
-}
-```
+Cloud environment: put the same line in the environment's setup script. Then every session in it starts with everything installed.
 
-For cloud sessions too: run Skill `new-project` in the repository. It writes `.claude/settings.json` with the `team`, `caveman` and `ponytail` plugins and the ultra modes, plus `AGENTS.md`, `CLAUDE.md` and `.agents/roles/`.
-
-The repository is private. Claude Code uses your git credentials (`gh auth login`). Background auto-update needs `GITHUB_TOKEN`. A cloud session needs the Claude GitHub App to have access to this repository.
+Per repository (so a project also works for people who did not run the line): run Skill `new-project`. It writes `.claude/settings.json` with the plugins and modes, plus `AGENTS.md`, `CLAUDE.md` and `.agents/roles/`.
 
 ## Models
 

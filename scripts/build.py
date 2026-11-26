@@ -2,8 +2,8 @@
 """Generate the tool-specific outputs from the neutral sources in `.agents/`.
 
 Sources: .agents/agents/<role>/agent.md, .agents/skills/, .agents/rules/, .agents/models.json,
-claude/hooks/. Outputs: plugins/team/ (Claude Code plugin) and dist/gemini/ (Gemini CLI
-extension). The outputs are committed, because a plugin install copies only the plugin folder.
+claude/hooks/. Outputs: plugins/team/ (Claude Code plugin), and gemini-extension.json plus
+GEMINI.md at the repo root (Gemini CLI extension). The outputs are committed, because a plugin install copies only the plugin folder.
 
 Usage: python3 -I scripts/build.py          write the outputs
        python3 -I scripts/build.py --check  write nothing; exit 1 when the outputs drift
@@ -57,15 +57,13 @@ def build_claude(out: Path, agents: list, models: dict) -> None:
 
 
 def build_gemini(out: Path, version: str) -> None:
-    ext = out / "dist" / "gemini"
-    ext.mkdir(parents=True)
-    manifest = {"name": "team", "version": version, "contextFileName": "GEMINI.md"}
-    (ext / "gemini-extension.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+    # The repo root is the Gemini extension (`gemini extensions install <repo-url>`):
+    # manifest and context file at the root, skills through the root `skills` link.
+    manifest = {"name": "team", "version": version, "description": "Shared role rules and skills.",
+                "contextFileName": "GEMINI.md"}
+    (out / "gemini-extension.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
     rules = [(SRC / "rules" / f"{n}.md").read_text(encoding="utf-8") for n in GEMINI_CONTEXT]
-    (ext / "GEMINI.md").write_text("\n\n".join(rules), encoding="utf-8")
-    shutil.copytree(SRC / "skills", ext / "skills")
-    shutil.copytree(SRC / "rules", ext / "rules")
-    shutil.copy(SRC / "models.json", ext / "models.json")
+    (out / "GEMINI.md").write_text("\n\n".join(rules), encoding="utf-8")
 
 
 def check_models(models: dict, names: set) -> None:
@@ -90,6 +88,8 @@ def build(out: Path) -> None:
 
 
 def same(a: Path, b: Path) -> bool:
+    if a.is_file():
+        return b.is_file() and filecmp.cmp(a, b, shallow=False)
     cmp = filecmp.dircmp(a, b)
     if cmp.left_only or cmp.right_only or cmp.funny_files:
         return False
@@ -100,15 +100,16 @@ def same(a: Path, b: Path) -> bool:
 def main() -> int:
     with tempfile.TemporaryDirectory() as tmp:
         build(Path(tmp))
-        targets = [Path("plugins/team"), Path("dist/gemini")]
+        targets = [Path("plugins/team"), Path("gemini-extension.json"), Path("GEMINI.md")]
         if "--check" in sys.argv:
             drift = [str(t) for t in targets if not (ROOT / t).exists() or not same(Path(tmp) / t, ROOT / t)]
             print(f"drift: {', '.join(drift)}; run python3 -I scripts/build.py" if drift else "outputs up to date")
             return 1 if drift else 0
-        for t in targets:
-            shutil.rmtree(ROOT / t, ignore_errors=True)
-            shutil.copytree(Path(tmp) / t, ROOT / t)
-    print("built plugins/team and dist/gemini")
+        shutil.rmtree(ROOT / "plugins/team", ignore_errors=True)
+        shutil.copytree(Path(tmp) / "plugins/team", ROOT / "plugins/team")
+        for name in ("gemini-extension.json", "GEMINI.md"):
+            shutil.copy(Path(tmp) / name, ROOT / name)
+    print("built plugins/team, gemini-extension.json and GEMINI.md")
     return 0
 
 

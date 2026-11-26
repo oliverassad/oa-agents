@@ -8,7 +8,7 @@ import json
 import subprocess
 import sys
 
-OUTPUTS = ("plugins/team/", "dist/gemini/")
+OUTPUTS = ("plugins/team/", "gemini-extension.json", "GEMINI.md")
 MANIFEST = "claude/manifest/plugin.json"
 
 

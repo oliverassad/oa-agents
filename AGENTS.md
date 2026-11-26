@@ -1,6 +1,6 @@
 # AGENTS.md: oa-claude
 
-This repository holds the shared agents, skills and rules for every project of the operator. It is the source for the Claude Code plugin `team` and the Gemini CLI extension `team`.
+This repository holds the shared agents, skills and rules for every project of the operator. It is the source for the Claude Code plugin `team` and the Gemini CLI extension `team`. The repository is public: never put a secret, a token or a private path in it.
 
 ## Layout
 
@@ -9,7 +9,9 @@ This repository holds the shared agents, skills and rules for every project of t
 - `.agents/rules/`: `core/` (every session and agent), `lang/` (per language), `area/` (per area: api, mcp, db, ui, testing, deps, infra, content).
 - `.agents/models.json`: the model map. `roles` (role to tier) and `tiers` (tier to model per tool). Every agent needs a role entry; the build fails otherwise.
 - `claude/`: Claude-only sources (plugin manifest, hooks).
-- `plugins/team/`, `dist/gemini/`: generated. Never edit them by hand.
+- `plugins/team/`, `gemini-extension.json`, `GEMINI.md`: generated. Never edit them by hand.
+- `install.sh`, `install/<cli>.sh`: the one-line installer and its per-CLI steps.
+- `skills`: a link to `.agents/skills` for the Gemini extension.
 
 ## Change a role, skill or rule
 
