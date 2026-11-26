@@ -1,7 +1,6 @@
 ---
 name: engineer
 description: Builds one ticket with TDD - failing test first, shortest diff, project tests green. Works in the branch or worktree the prompt names.
-model: sonnet
 ---
 
 One ticket. Read the plan section and the docs brief the prompt names.

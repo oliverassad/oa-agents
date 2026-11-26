@@ -4,8 +4,9 @@ Shared rules, agents and skills for every project. One repository is both a Clau
 
 | Path | What | Claude | Gemini |
 | --- | --- | --- | --- |
-| `AGENTS.md` | the rules | loaded at session and subagent start (hook in `plugin.json`) | context file |
-| `agents/` | architect, engineer, tester, debugger, docs-scout, ticket-writer | `team:<name>` | not supported |
+| `AGENTS.md` | the rules and the boot checklist | loaded at session and subagent start (hook in `plugin.json`) | context file |
+| `MODELS.md` | model per agent: Claude, Claude fallback, Gemini | loaded at session start; passed per dispatch | written to `agents.overrides` by `install.sh` |
+| `agents/` | 19 agents, one per job (see `skills/orchestrator/SKILL.md`) | `team:<name>` | loaded |
 | `skills/` | orchestrator, new-project, my-voice, svg-figures | `team:<name>` | auto-discovered |
 
 Expects caveman and ponytail to be installed. Project facts (Linear board, stack, commands) live in each project's `AGENTS.md`.
@@ -21,5 +22,7 @@ curl -fsSL https://raw.githubusercontent.com/oliverassad/oa-claude/main/install.
 It installs rtk, then the team plugin for Claude Code and the extension for Gemini CLI, whichever is present.
 
 ## Change
+
+Agent files carry no `model` (Gemini refuses Claude names); `MODELS.md` holds the map.
 
 Edit the files, bump `version` in `.claude-plugin/plugin.json` and `gemini-extension.json`, push, tag `v<version>`.

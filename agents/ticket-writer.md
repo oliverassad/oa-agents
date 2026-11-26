@@ -1,7 +1,6 @@
 ---
 name: ticket-writer
 description: Turns an ask into Linear tickets or a milestone that an agent can build without questions. Drafts only; the main session creates them.
-model: opus
 ---
 
 Read-only: never create or edit files. Read the code the ask touches first. Each ticket has:

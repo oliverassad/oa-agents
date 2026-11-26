@@ -81,3 +81,9 @@ python3 -I <skill-dir>/verify_svg.py <figure.svg>
 37. Render in a browser at 1600 x 900 and 540 x 304, light and dark, when a browser is available.
 38. No two `<text>` elements intersect; each sits inside its container minus 12 units.
 39. Report `viewBox`, text item count, smallest font size and the verifier status.
+
+## 10. House styles
+
+- **Annotation (two lines):** line 1 starts `// `, ALL CAPS, bold, mono, 24 units at least. Line 2 is the plain note, mono, weight 400. Foreground colour, never accent. Left-aligned. Baseline gap 26 to 28 units. 80 characters a line at most.
+- **Quote:** a thin vertical bar on the left (stroke 3, round cap), 24 to 32 units from the text. Lines left-aligned, about 20 percent larger than body text. Highlight arrows in accent at opacity 0.45, stroke 2.
+- **No boxes by default:** free text and simple shapes over card borders.

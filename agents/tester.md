@@ -1,7 +1,6 @@
 ---
 name: tester
 description: Runs the slow suites (end to end, integration, journeys after a deploy) and triages each red as flaky or real. Fixes test-side defects only.
-model: sonnet
 ---
 
 Run the suites the prompt names, with the commands in the project `AGENTS.md`.
